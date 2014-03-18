@@ -5,7 +5,7 @@ mob/Move()
 
 mob/proc/Dmg(N)
 	health -= N
-	usr.ChkHlth()
+	src.ChkHlth()
 
 
 
@@ -16,7 +16,7 @@ mob/proc/ChkHlth()
 	if(health <= 0&&!dead)
 		icon = 'corpse.dmi'
 		move = 0
-		usr << "\red\bold You drop dead on to the floor!"
+		src << "\red\bold You drop dead on to the floor!"
 		oview() << "\red\bold [usr] Drops dead onto the floor!"
 		dead = 1
 
@@ -24,20 +24,20 @@ mob/proc/ChkHlth()
 
 
 mob/proc/Bleed(br,bs)
-	new/obj/blood(usr.loc)
+	new/obj/blood(src.loc)
 	bleed = br
-	usr.ChkGore()
+	src.ChkGore()
 	var/i
 	for(i=0,i<bs,i++)
 		if(dead)
 			br = 0
-		usr.Dmg(br)
+		src.Dmg(br)
 		sleep(10)
 	if(i==bs)
 		br = 0
 		bleed = 0
-		usr << "\green You stop bleeding!"
-		oview() << "[usr] stops bleeding!"
+		src << "\green You stop bleeding!"
+		oview() << "[src] stops bleeding!"
 
 
 
@@ -59,16 +59,15 @@ mob/Move()
 
 
 
-proc/Explode()
-	var/mob/M
+mob/proc/Explode(mob/M)
 	for(M in view(2))
 		M << "\red\bold You are enveloped in a powerful explosion!"
-		usr.Dmg(rand(25,50))
+		M.Dmg(rand(25,50))
 		if(prob(50))
-			usr.legs = 0
+			M.legs = 0
 		if(prob(50))
-			usr.arms = 0
-		usr.ChkLimbs()
+			M.arms = 0
+		M.ChkLimbs()
 		if(prob(95))
 			M.Bleed(rand(1,5),15)
 

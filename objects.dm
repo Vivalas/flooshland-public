@@ -14,22 +14,22 @@ mob
 
 	proc/ChkLimbs()
 		if (!legs)
-			usr << "\bold\red Your legs have been dismembered from your body!"
-			usr << "You fall over!"
-			oview() << "[usr] falls over!"
+			src << "\bold\red Your legs have been dismembered from your body!"
+			src << "You fall over!"
+			view() << "[src] falls over!"
 		if (!arms)
-			usr << "\bold\red Your arms have been dismembered from your body!"
-
+			src << "\bold\red Your arms have been dismembered from your body!"
+			view() << "\bold\red [src] arms have been dismembered from their body!"
 	proc/ChkGore()
-		if(usr.bleed == 1)
-			oview() << "\red [usr] begins to bleed!"
-			usr << "\red You begin to bleed!"
-		if(usr.bleed == 2)
-			oview() << "\red [usr] begins to bleed a lot!"
-			usr << "\red You begin to bleed a lot!"
-		if(usr.bleed >= 3)
-			oview() << "\red [usr] turns limp and pale, as fountains of blood gush out of them!"
-			usr << "\red Your body goes limp and pale as you bleed profusely, fountains of blood gushing out!"
+		if(src.bleed == 1)
+			view() << "\red [src] begins to bleed!"
+			src << "\red You begin to bleed!"
+		if(src.bleed == 2)
+			view() << "\red [src] begins to bleed a lot!"
+			src << "\red You begin to bleed a lot!"
+		if(src.bleed >= 3)
+			view() << "\red [src] turns limp and pale, as fountains of blood gush out of them!"
+			src << "\red Your body goes limp and pale as you bleed profusely, fountains of blood gushing out!"
 
 turf/grass
 	var/use = 0
@@ -45,10 +45,9 @@ obj/swagpotion
 	desc = "S-w-w-w-w-w-wAG!"
 	use = 1
 	verb/drink(mob/M)
-		if(usr.ChkUse())
-			set src in view(1)
-			M = src
-			usr.swag = 1
+		set src in view(1)
+		if(M.ChkUse())
+			M.swag = 1
 
 
 
@@ -57,7 +56,8 @@ obj/vm
 	name = "Vending Machine"
 	icon = 'potionbottle.dmi'
 	Click()
-		if(usr.dead||!usr.arms||!src in view(1))
+		set src in view(1)
+		if(usr.dead||!usr.arms)
 			if(!usr.arms)
 				world <<"\blue [usr] attempts to use the machine with his nubby stumps!"
 			return
@@ -71,12 +71,11 @@ obj/DeathPotion
 	use = 1
 	icon = 'potionbottle.dmi'
 	verb/Drink(mob/M)
-		if(usr.ChkUse())
-			set src in view(1)
-			M = src
-			usr << "\blue You drink a potion!"
-			usr.Dmg(25)
-			usr.Bleed(rand(1,2),rand(8,15))
+		set src in view (1)
+		if(M.ChkUse())
+			M << "\blue You drink a potion!"
+			M.Dmg(25)
+			M.Bleed(rand(1,2),rand(8,15))
 
 
 obj/blood
@@ -88,18 +87,16 @@ mob/proc/ChkUse()
 		return 0
 	return 1
 
+obj
+	var/use
+
+
 
 
 obj/bombpotion
 	use = 1
 	icon = 'potionbottle.dmi'
-
-	verb/use(mob/M)
+	verb/drink(mob/M)
 		set src in view(1)
-		M = src
-		if(usr.ChkUse())
-			Explode()
-
-
-obj
-	var/use
+		if(M.ChkUse())
+			M.Explode()

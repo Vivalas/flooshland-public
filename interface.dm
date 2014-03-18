@@ -18,9 +18,6 @@ mob/Stat()
 
 
 client
-	DblClick(obj/O in view(1))
-		if(O.use&&usr.ChkUse())
-			O.loc = usr.contents
+	DblClick(obj/o in view(1))
+		if(istype(o,o))
 
-	DblClick(obj/O in usr.contents)
-		if(O.use&&usr.ChkUse())

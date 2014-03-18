@@ -13,11 +13,11 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "Core.dm"
+#include "core.dm"
 #include "interface.dm"
-#include "Login.dm"
-#include "Objects.dm"
-#include "Statuseffects.dm"
+#include "login.dm"
+#include "objects.dm"
+#include "statuseffects.dm"
 #include "world1.dmm"
 // END_INCLUDE
 
