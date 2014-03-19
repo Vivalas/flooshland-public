@@ -11,15 +11,18 @@ mob
 	var/legs = 1
 	var/bleed = 0
 	var/step = 0
+	var/nt = 0
+	desc = "A small yellow creature capable of regenerating it's own limbs."
 
 	proc/ChkLimbs()
 		if (!legs)
 			src << "\bold\red Your legs have been dismembered from your body!"
+			view() << "\bold\red [src]'s legs have been dismembered from their body!"
 			src << "You fall over!"
 			view() << "[src] falls over!"
 		if (!arms)
 			src << "\bold\red Your arms have been dismembered from your body!"
-			view() << "\bold\red [src] arms have been dismembered from their body!"
+			view() << "\bold\red [src]'s arms have been dismembered from their body!"
 	proc/ChkGore()
 		if(src.bleed == 1)
 			view() << "\red [src] begins to bleed!"
@@ -31,7 +34,13 @@ mob
 			view() << "\red [src] turns limp and pale, as fountains of blood gush out of them!"
 			src << "\red Your body goes limp and pale as you bleed profusely, fountains of blood gushing out!"
 
+
+
+
+
+
 turf/grass
+	desc = "Lush green wavy grass!"
 	var/use = 0
 	icon = 'grass.dmi'
 
@@ -40,16 +49,16 @@ obj/start
 	icon = 'grass.dmi'
 
 obj/swagpotion
+
 	icon = 'potionbottle.dmi'
 	name = "Swag Potion"
-	desc = "S-w-w-w-w-w-wAG!"
+	desc = "A potion that gives the user incredible amounts of swag at a *cough* price."
 	use = 1
 	verb/drink(mob/M)
 		set src in view(1)
 		if(M.ChkUse())
 			M.swag = 1
-
-
+			spawn(rand(50,900)) M.Explode()
 
 obj/vm
 	use = 0
@@ -68,6 +77,7 @@ obj/vm
 		var/obj/v = (/obj/vm)
 
 obj/DeathPotion
+	desc = "A potion that is not very good for your health."
 	use = 1
 	icon = 'potionbottle.dmi'
 	verb/Drink(mob/M)
@@ -79,6 +89,7 @@ obj/DeathPotion
 
 
 obj/blood
+	desc = "A red liquid that is part of most animals' circulatory system."
 	use = 0
 	icon = 'blood.dmi'
 
@@ -94,9 +105,24 @@ obj
 
 
 obj/bombpotion
+	desc = "A potion that has rather explosive effects."
 	use = 1
 	icon = 'potionbottle.dmi'
 	verb/drink(mob/M)
 		set src in view(1)
 		if(M.ChkUse())
 			M.Explode()
+
+
+mob/verb/Examine(atom/O in view())
+	set category = null
+	src << "\bold This is [O]\n\n\blue [O.desc]"
+
+mob/verb/SetName(T as text)
+	set name = "Set Name"
+	set desc = "Choose your name!"
+	if(src.nt == 1)
+		src << "\red You can only set your name once!"
+		return
+	src.name = T
+	src.nt++

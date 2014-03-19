@@ -17,7 +17,7 @@ mob/proc/ChkHlth()
 		icon = 'corpse.dmi'
 		move = 0
 		src << "\red\bold You drop dead on to the floor!"
-		oview() << "\red\bold [usr] Drops dead onto the floor!"
+		view() << "\red\bold [src] Drops dead onto the floor!"
 		dead = 1
 
 
@@ -69,5 +69,5 @@ mob/proc/Explode(mob/M)
 			M.arms = 0
 		M.ChkLimbs()
 		if(prob(95))
-			M.Bleed(rand(1,5),15)
+			spawn() M.Bleed(rand(1,5),15)
 

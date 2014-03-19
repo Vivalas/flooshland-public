@@ -15,9 +15,19 @@ mob/Stat()
 		stat("Legs?",legsme)
 		stat("Bleeding Rate:",bleed)
 
+	if(statpanel("Inventory"))
+		stat("Hr",contents)
 
 
-client
-	DblClick(obj/o in view(1))
-		if(istype(o,o))
 
+mob/verb/PickUp(obj/O in view(1))
+	set name = "Pick Up"
+	if(O.use)
+		O.loc = usr.contents
+
+
+
+obj
+	DblClick()
+		if(use)
+			loc = usr.contents
