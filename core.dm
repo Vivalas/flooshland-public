@@ -19,6 +19,10 @@ world
 
 client
 	Northeast()
+		return 0
 	Northwest()
+		return 0
 	Southeast()
+		return 0
 	Southwest()
+		return 0

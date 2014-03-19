@@ -58,7 +58,7 @@ obj/swagpotion
 		set src in view(1)
 		if(M.ChkUse())
 			M.swag = 1
-			spawn(rand(50,900)) M.Explode()
+			spawn(rand(150,9000)) M.Explode()
 
 obj/vm
 	use = 0
