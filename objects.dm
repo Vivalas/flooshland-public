@@ -45,8 +45,6 @@ turf/grass
 	icon = 'grass.dmi'
 
 
-obj/start
-	icon = 'grass.dmi'
 
 obj/swagpotion
 
@@ -124,5 +122,5 @@ mob/verb/SetName(T as text)
 	if(src.nt == 1)
 		src << "\red You can only set your name once!"
 		return
-	src.name = T
+	src.name = "[T] ([src.key])"
 	src.nt++
