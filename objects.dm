@@ -14,7 +14,7 @@ mob
 	var/nt = 0
 	var/stuck = 0
 	desc = "A small yellow creature capable of regenerating it's own limbs."
-
+	icon_state = "up"
 	proc/ChkLimbs()
 		if (!legs)
 			src << "\bold\red Your legs have been dismembered from your body!"
@@ -46,12 +46,12 @@ turf/grass
 	icon = 'grass.dmi'
 	verb/eat()
 		if(usr.ChkUse())
-			set src in view(1)
+			set src in usr.loc
 			usr << "\blue You pull grass out of the ground and eat it!"
 			view() << "\blue [usr] must be crazy! They hungrily pull tufts of grass out of the ground and stuff it in their mouth!"
 
 	verb/lick()
-		set src in view(1)
+		set src in usr.loc
 		usr << "\blue You lick the grass!"
 		view() << "\blue [usr] licks the grass! What is wrong with them?"
 
@@ -65,20 +65,18 @@ obj/swagpotion
 	desc = "A potion that gives the user incredible amounts of swag at a *cough* price."
 	use = 1
 	verb/drink()
-		set src in view(1)
 		if(usr.ChkUse())
 			usr.swag = 1
 			spawn() usr.Explode()
 			usr << "\blue You drink a swag potion!"
 			view() << "\blue [usr] drinks a swag potion!"
 	verb/eat()
-		set src in view(1)
 		if(usr.ChkUse())
-			usr << "\blue You gnaw on the potion!"
-			view() << "\blue [usr] gnaws on the potion!"
+			usr << "\blue You gnaw on the potion's bottle!"
+			view() << "\blue [usr] gnaws on the swag potion!"
 
 
-obj/vm
+/*obj/vm
 	use = 0
 	name = "Vending Machine"
 	icon = 'potionbottle.dmi'
@@ -93,6 +91,7 @@ obj/vm
 		usr << "\blue You use the vending machine!"
 		var/obj/O = (/obj/swagpotion)
 		var/obj/v = (/obj/vm)
+*/ //not ready to implement this yet
 
 obj/DeathPotion
 	desc = "A potion that is not very good for your health."

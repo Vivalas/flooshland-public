@@ -15,8 +15,6 @@ mob/Stat()
 		stat("Legs?",legsme)
 		stat("Bleeding Rate:",bleed)
 
-	if(statpanel("Inventory"))
-		stat("Inventory",usr.contents)
 
 
 mob/verb/PickUp(obj/O in view(1))
@@ -172,3 +170,21 @@ mob/verb/SetName(T as text)
 		return
 	src.name = "[T] ([src.key])"
 	src.nt++
+
+mob/verb/liedown()
+	set name = "Lie Down/Get Up"
+	if(!density)
+		density = 1
+		stuck = 0
+		usr << "You stand up."
+		view() << "[src] stands up!"
+		icon_state = "up"
+	else
+		density = 0
+		stuck = 1
+		usr << "You lie down!"
+		view() << "[src] lies down!"
+		icon_state = "ground"
+
+mob/Stat()
+	statpanel("Inventory",usr.contents)
