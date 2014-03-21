@@ -69,6 +69,7 @@ obj/swagpotion
 			usr.swag = 1
 			usr << "\blue You drink a swag potion!"
 			view() << "\blue [usr] drinks a swag potion!"
+			del src
 	verb/Eat()
 		if(usr.ChkUse())
 			usr << "\blue You gnaw on the potion's bottle!"
@@ -102,6 +103,7 @@ obj/DeathPotion
 			view() << "\blue [usr] drinks a Death Potion!"
 			usr.Dmg(25)
 			usr.Bleed(rand(1,2),rand(8,15))
+			del src
 	verb/Eat()
 		if(usr.ChkUse())
 			usr << "\blue You gnaw on the potion's bottle!"
@@ -130,12 +132,19 @@ obj
 
 
 obj/bombpotion
+	name = "BombPotion"
 	desc = "A potion that has rather explosive effects."
 	use = 1
 	icon = 'potionbottle.dmi'
-	verb/drink(mob/M)
-		set src in view(1)
-		if(M.ChkUse())
-			M.Explode()
+	verb/Drink()
+		if(usr.ChkUse())
+			var/mob/m
+			m.Explode()
+
+	verb/Eat()
+		if(usr.ChkUse())
+			usr << "\blue You gnaw on the potion's bottle!"
+			view() << "\blue [usr] gnaws on the Bomb Potion!"
+
 
 
