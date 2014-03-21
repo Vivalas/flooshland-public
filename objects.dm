@@ -64,13 +64,12 @@ obj/swagpotion
 	name = "Swag Potion"
 	desc = "A potion that gives the user incredible amounts of swag at a *cough* price."
 	use = 1
-	verb/drink()
+	verb/Drink()
 		if(usr.ChkUse())
 			usr.swag = 1
-			spawn() usr.Explode()
 			usr << "\blue You drink a swag potion!"
 			view() << "\blue [usr] drinks a swag potion!"
-	verb/eat()
+	verb/Eat()
 		if(usr.ChkUse())
 			usr << "\blue You gnaw on the potion's bottle!"
 			view() << "\blue [usr] gnaws on the swag potion!"
@@ -97,18 +96,27 @@ obj/DeathPotion
 	desc = "A potion that is not very good for your health."
 	use = 1
 	icon = 'potionbottle.dmi'
-	verb/Drink(mob/M)
-		set src in view (1)
-		if(M.ChkUse())
-			M << "\blue You drink a potion!"
-			M.Dmg(25)
-			M.Bleed(rand(1,2),rand(8,15))
+	verb/Drink()
+		if(usr.ChkUse())
+			usr << "\blue You drink a potion!"
+			view() << "\blue [usr] drinks a Death Potion!"
+			usr.Dmg(25)
+			usr.Bleed(rand(1,2),rand(8,15))
+	verb/Eat()
+		if(usr.ChkUse())
+			usr << "\blue You gnaw on the potion's bottle!"
+			view() << "\blue [usr] gnaws on the Death Potion!"
 
 
 obj/blood
 	desc = "A red liquid that is part of most animals' circulatory system."
 	use = 0
 	icon = 'blood.dmi'
+	verb/Drink()
+		set src in usr.loc
+		usr << "\blue You slurp blood off the ground!"
+		view() << "\blue [usr] slurps blood off of the ground!"
+		del src
 
 mob/proc/ChkUse()
 	if(dead|!arms)

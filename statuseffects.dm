@@ -61,13 +61,13 @@ mob/Move()
 
 mob/proc/Explode()
 	for(var/mob/M in view(2))
-	src << "\red\bold You are enveloped in a powerful explosion!"
-	src.Dmg(rand(25,50))
-	if(prob(50))
-		src.legs = 0
-	if(prob(50))
-		src.arms = 0
-	src.ChkLimbs()
-	if(prob(95))
-		spawn() src.Bleed(rand(1,5),15)
+		M << "\red\bold You are enveloped in a powerful explosion!"
+		M.Dmg(rand(25,50))
+		if(prob(50))
+			M.legs = 0
+		if(prob(50))
+			M.arms = 0
+		M.ChkLimbs()
+		if(prob(95))
+			spawn() M.Bleed(rand(1,5),15)
 
