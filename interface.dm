@@ -15,6 +15,8 @@ mob/Stat()
 		stat("Legs?",legsme)
 		stat("Bleeding Rate:",bleed)
 
+	statpanel("Inventory",usr.contents)
+
 
 
 mob/verb/PickUp(obj/O in view(1))
@@ -28,6 +30,14 @@ obj
 	DblClick()
 		if(use&&usr.ChkUse())
 			loc = usr
+
+
+obj
+	Click()
+		if(src in usr)
+			loc = usr.loc
+
+
 
 
 mob/verb/Say(m as text)
@@ -186,5 +196,3 @@ mob/verb/liedown()
 		view() << "[src] lies down!"
 		icon_state = "ground"
 
-mob/Stat()
-	statpanel("Inventory",usr.contents)

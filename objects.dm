@@ -148,3 +148,21 @@ obj/bombpotion
 
 
 
+obj/Sword
+	desc = "A sleek metal object used to slash people open like pinatas!"
+
+
+	verb/Lick()
+		if(usr.ChkUse())
+			src << "\blue You lick the sword!"
+			view() << "\blue [usr] licks the sword with passion!"
+
+
+	verb/Eat()
+		if(usr.ChkUse())
+			src << "\blue You bite the sword!"
+			view() << "\blue [usr] bites the sword!"
+			src << "\red You cut your mouth! Ouch!"
+			view() << "\red [usr] cuts their mouth! Ouch!"
+			usr.Bleed(1,12)
+
