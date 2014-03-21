@@ -13,6 +13,7 @@ mob
 	var/step = 0
 	var/nt = 0
 	var/stuck = 0
+	var/equip = "None"
 	desc = "A small yellow creature capable of regenerating it's own limbs."
 	icon_state = "up"
 	proc/ChkLimbs()
@@ -150,19 +151,45 @@ obj/bombpotion
 
 obj/Sword
 	desc = "A sleek metal object used to slash people open like pinatas!"
-
+	icon = 'sword.dmi'
+	use = 1
 
 	verb/Lick()
 		if(usr.ChkUse())
-			src << "\blue You lick the sword!"
+			usr << "\blue You lick the sword!"
 			view() << "\blue [usr] licks the sword with passion!"
 
 
 	verb/Eat()
 		if(usr.ChkUse())
-			src << "\blue You bite the sword!"
+			usr << "\blue You bite the sword!"
 			view() << "\blue [usr] bites the sword!"
-			src << "\red You cut your mouth! Ouch!"
+			usr << "\red You cut your mouth! Ouch!"
 			view() << "\red [usr] cuts their mouth! Ouch!"
 			usr.Bleed(1,12)
+
+	verb/Equip()
+		if(src == usr.equip)
+			usr.equip = "None"
+			return
+		usr.equip = src
+
+
+mob
+	DblClick(mob/M in view(1))
+		if(src == usr)
+			usr << "\red\bold You stab yourself with a sword!"
+			view() << "\red\bold [usr] stabs themself with a sword!"
+			src.Dmg(rand(5,20))
+			if(prob(10))
+				src.Bleed(rand(1,2),10)
+			return
+		if(istype(usr.equip,/obj/Sword))
+			src.Dmg(rand(5,20))
+			new/obj/blood(src.loc)
+			src << "\red\bold You are slashed by a sword by [usr]!"
+			view() << "\red\bold [usr] slashes [src] with a sword!"
+			if(prob(10))
+				src.Bleed(rand(1,2),10)
+
 

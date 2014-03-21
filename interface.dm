@@ -11,9 +11,11 @@ mob/Stat()
 
 	if(statpanel("Status"))
 		stat("Health:",health)
+		stat("Equipped:",equip)
 		stat("Arms?",armsme)
 		stat("Legs?",legsme)
 		stat("Bleeding Rate:",bleed)
+
 
 	statpanel("Inventory",usr.contents)
 
@@ -22,7 +24,7 @@ mob/Stat()
 mob/verb/PickUp(obj/O in view(1))
 	set name = "Pick Up"
 	if(O.use)
-		O.loc = src.contents
+		O.loc = usr
 
 
 

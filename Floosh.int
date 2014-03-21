@@ -2,9 +2,9 @@
 /*
 MAP_ICON_TYPE: 0
 LAST_COMPILE_VERSION: 504.1234
-WINDOW: interface.dm;floosh.dmi;objects.dm;statuseffects.dm;sword.dmi
-FILE: interface.dm
-LAST_COMPILE_TIME: 1395383682
+WINDOW: objects.dm;world1.dmm;interface.dm;statuseffects.dm
+FILE: objects.dm
+LAST_COMPILE_TIME: 1395385135
 AUTO_FILE_DIR: ON
 */
 // END_INTERNALS

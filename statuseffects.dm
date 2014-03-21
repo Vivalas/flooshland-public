@@ -15,10 +15,14 @@ mob/proc/Dmg(N)
 mob/proc/ChkHlth()
 	if(health <= 0&&!dead)
 		icon = 'corpse.dmi'
-		move = 0
 		src << "\red\bold You drop dead on to the floor!"
 		view() << "\red\bold [src] drops dead onto the floor!"
 		dead = 1
+	if(dead && health > 0)
+		icon = 'floosh.dmi'
+		icon_state = "up"
+		dead = 0
+		view() << "\red\bold [src] has risen from the dead!"
 
 
 
