@@ -17,7 +17,7 @@ mob/proc/ChkHlth()
 		icon = 'corpse.dmi'
 		move = 0
 		src << "\red\bold You drop dead on to the floor!"
-		view() << "\red\bold [src] Drops dead onto the floor!"
+		view() << "\red\bold [src] drops dead onto the floor!"
 		dead = 1
 
 
@@ -52,22 +52,35 @@ mob/Move()
 
 
 mob/Move()
-	if(dead||!legs)
+	if(dead||!legs||stuck)
 		return
 	..()
 
 
 
 
-mob/proc/Explode(mob/M)
-	for(M in view(2))
-		M << "\red\bold You are enveloped in a powerful explosion!"
-		M.Dmg(rand(25,50))
-		if(prob(50))
-			M.legs = 0
-		if(prob(50))
-			M.arms = 0
-		M.ChkLimbs()
-		if(prob(95))
-			spawn() M.Bleed(rand(1,5),15)
+mob/proc/Explode()
+	src << "\red\bold You are enveloped in a powerful explosion!"
+	src.Dmg(rand(25,50))
+	if(prob(50))
+		src.legs = 0
+	if(prob(50))
+		src.arms = 0
+	src.ChkLimbs()
+	if(prob(95))
+		spawn() src.Bleed(rand(1,5),15)
+
+	for(var/mob/M in view(2))
+		if(M == src)
+			continue
+
+	src << "\red\bold You are enveloped in a powerful explosion!"
+	src.Dmg(rand(25,50))
+	if(prob(50))
+		src.legs = 0
+	if(prob(50))
+		src.arms = 0
+	src.ChkLimbs()
+	if(prob(95))
+		spawn() src.Bleed(rand(1,5),15)
 

@@ -12,6 +12,7 @@ mob
 	var/bleed = 0
 	var/step = 0
 	var/nt = 0
+	var/stuck = 0
 	desc = "A small yellow creature capable of regenerating it's own limbs."
 
 	proc/ChkLimbs()
@@ -43,6 +44,17 @@ turf/grass
 	desc = "Lush green wavy grass!"
 	var/use = 0
 	icon = 'grass.dmi'
+	verb/eat()
+		if(usr.ChkUse())
+			set src in view(1)
+			usr << "\blue You pull grass out of the ground and eat it!"
+			view() << "\blue [usr] must be crazy! They hungrily pull tufts of grass out of the ground and stuff it in their mouth!"
+
+	verb/lick()
+		set src in view(1)
+		usr << "\blue You lick the grass!"
+		view() << "\blue [usr] licks the grass! What is wrong with them?"
+
 
 
 
@@ -52,11 +64,19 @@ obj/swagpotion
 	name = "Swag Potion"
 	desc = "A potion that gives the user incredible amounts of swag at a *cough* price."
 	use = 1
-	verb/drink(mob/M)
+	verb/drink()
 		set src in view(1)
-		if(M.ChkUse())
-			M.swag = 1
-			spawn(rand(150,9000)) M.Explode()
+		if(usr.ChkUse())
+			usr.swag = 1
+			spawn() usr.Explode()
+			usr << "\blue You drink a swag potion!"
+			view() << "\blue [usr] drinks a swag potion!"
+	verb/eat()
+		set src in view(1)
+		if(usr.ChkUse())
+			usr << "\blue You gnaw on the potion!"
+			view() << "\blue [usr] gnaws on the potion!"
+
 
 obj/vm
 	use = 0
@@ -112,15 +132,3 @@ obj/bombpotion
 			M.Explode()
 
 
-mob/verb/Examine(atom/O in view())
-	set category = null
-	src << "\bold This is [O]\n\n\blue [O.desc]"
-
-mob/verb/SetName(T as text)
-	set name = "Set Name"
-	set desc = "Choose your name!"
-	if(src.nt == 1)
-		src << "\red You can only set your name once!"
-		return
-	src.name = "[T] ([src.key])"
-	src.nt++

@@ -25,9 +25,3 @@ world/New()
 		world << "\n\blue\bold The dawn breaks as the moon sweeps out of sight."
 
 
-mob
-	Move()
-		sleep(2)
-		..()
-
-
