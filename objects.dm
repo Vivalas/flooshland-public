@@ -171,6 +171,7 @@ obj/Sword
 	verb/Equip()
 		if(src == usr.equip)
 			usr.equip = "None"
+			view() << "\red [usr] sheathes their sword!"
 			return
 		usr.equip = src
 
