@@ -299,15 +299,6 @@ mob/admin/verb/Invisibility()
 		view() << "\blue [usr] materializes!"
 		return
 
-obj
-	verb/move()
-		set name = "Move"
-		set src in view(1)
-		if(usr.ChkUse())
-			if(src.use)
-				src.loc = usr.loc
-
-
 
 obj
 	DblClick()
