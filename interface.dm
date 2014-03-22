@@ -289,8 +289,9 @@ mob/admin/verb/Invisibility()
 		return
 
 obj
-	Click()
+	verb/move()
+		set name = "Move"
+		set src in view(1)
 		if(usr.ChkUse())
-			if(src in view(1))
-				if(src.loc <> usr.loc)
-					src.loc = usr.loc
+			if(src.use)
+				src.loc = usr.loc
