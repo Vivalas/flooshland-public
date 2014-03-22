@@ -1,13 +1,22 @@
 mob/Login()
-	if(loc)
+	if(loc&&!res)
 		usr << "Welcome back to the game!"
 		world << "\bold [usr.key] has reconnected!"
-	else
+		..()
+
+	if(res)
+		res = 0
+		..()
+
+	if(!loc)
 		usr.loc = locate(1,1,1)
 		world << "\bold [usr] has joined the game!"
 
 mob/Logout()
-	world << "\bold [usr.key] has left the game! :("
+	if(res)
+		..()
+	if(!res)
+		world << "\bold [usr.key] has left the game! :("
 
 
 

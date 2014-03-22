@@ -1,5 +1,6 @@
 mob
 	icon = 'floosh.dmi'
+	name = "Floosh"
 	var/swag = 0
 	var/fasty = 0
 	var/british = 0
@@ -95,6 +96,7 @@ obj/swagpotion
 */ //not ready to implement this yet
 
 obj/DeathPotion
+	name = "Death Potion"
 	desc = "A potion that is not very good for your health."
 	use = 1
 	icon = 'potionbottle.dmi'
@@ -115,6 +117,7 @@ obj/blood
 	desc = "A red liquid that is part of most animals' circulatory system."
 	use = 0
 	icon = 'blood.dmi'
+	layer = OBJ_LAYER - 1
 	verb/Drink()
 		set src in usr.loc
 		usr << "\blue You slurp blood off the ground!"
@@ -133,13 +136,16 @@ obj
 
 
 obj/bombpotion
-	name = "BombPotion"
+	name = "Bomb Potion"
 	desc = "A potion that has rather explosive effects."
 	use = 1
 	icon = 'potionbottle.dmi'
 	verb/Drink()
+		usr << "\blue You drink a Bomb Potion!"
+		view() << "\blue [use] drinks a Bomb Potion!"
 		if(usr.ChkUse())
 			usr.Explode()
+			del src
 
 	verb/Eat()
 		if(usr.ChkUse())
@@ -151,6 +157,7 @@ obj/bombpotion
 obj/Sword
 	desc = "A sleek metal object used to slash people open like pinatas!"
 	icon = 'sword.dmi'
+	icon_state = "normal"
 	use = 1
 
 	verb/Lick()
@@ -186,14 +193,97 @@ mob
 					src.Dmg(rand(5,20))
 					if(prob(10))
 						src.Bleed(rand(1,2),10)
-					new/obj/blood(src.loc)
+					if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(loc)
 					return
 		if(istype(usr.equip,/obj/Sword))
 			if(usr.ChkUse())
 				src.Dmg(rand(5,20))
-				new/obj/blood(src.loc)
+				if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(loc)
 				view() << "\red\bold [usr] slashes [src] with a sword!"
 				if(prob(10))
 					src.Bleed(rand(1,2),10)
 
 
+obj/Spawner
+	icon_state = "red"
+	var/atom/T
+	icon = 'spawner.dmi'
+	DblClick()
+		set src in view(1)
+		if(usr.ChkUse())
+			if(!(locate(/obj/Sword) in src.loc))
+				if(prob(5))
+					new/obj/deathsword(src.loc)
+					return
+				new/obj/Sword(src.loc)
+
+
+obj/deathsword
+	name = "Garnellian Death Sword"
+	desc = "A sword produced by the Garnellian Iron Works, very deadly."
+	icon = 'sword.dmi'
+	icon_state = "death"
+	use = 1
+
+	verb/Lick()
+		if(usr.ChkUse())
+			usr << "\blue You lick the Garnellian Death Sword"
+			view() << "\blue [usr] licks the Garnellian Death Sword with passion!"
+			usr.Explode()
+			del src
+
+
+	verb/Eat()
+		if(usr.ChkUse())
+			usr << "\blue You bite the sword!"
+			view() << "\blue [usr] bites the sword!"
+			usr << "\red Your mouth burns and sears, and blood spurts out!"
+			view() << "\red [usr]'s mouth is pulverised by the Garnellian Death Sword as he bites it!"
+			usr.Bleed(5,15)
+
+	verb/Equip()
+		if(src == usr.equip)
+			usr.equip = "None"
+			view() << "\red [usr] sheathes their Garnellian Death Sword"
+			return
+		else
+			usr.equip = src
+			view() << "\red [usr] draws their Garnellian Death Sword!"
+
+
+mob
+	DblClick(mob/M in view(1))
+		if(src == usr)
+			if(istype(usr.equip,/obj/deathsword))
+				if(usr.ChkUse())
+					view() << "\red\bold [usr] stabs themself with a Garnellian Death Sword!"
+					src.Dmg(rand(20,70))
+					if(prob(40))
+						src.Bleed(rand(2,3),20)
+					if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(loc)
+					return
+		if(istype(usr.equip,/obj/deathsword))
+			if(usr.ChkUse())
+				src.Dmg(rand(20,70))
+				if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(loc)
+				view() << "\red\bold [usr] slashes [src] with a sword!"
+				if(prob(40))
+					src.Bleed(rand(2,3),20)
+
+
+obj/Spawner2
+	name = "Potion Spawner"
+	var/atom/T
+	icon = 'spawner.dmi'
+	icon_state = "blue"
+	DblClick()
+		set src in view(1)
+		if(usr.ChkUse())
+			if(!(locate(/obj/bombpotion) in src.loc))
+				if(prob(20))
+					new/obj/DeathPotion(src.loc)
+					return
+				if(prob(1))
+					new/obj/swagpotion
+					return
+				new/obj/bombpotion(src.loc)

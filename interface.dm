@@ -26,6 +26,7 @@ mob/verb/PickUp(obj/O in view(1))
 	if(usr.ChkUse())
 		if(O.use)
 			O.loc = usr
+			view() << "\blue [usr] picks up a [O]"
 
 
 
@@ -33,6 +34,7 @@ obj
 	DblClick()
 		if(use&&usr.ChkUse())
 			loc = usr
+			view() << "\blue [usr] picks up a [src]"
 
 
 obj
@@ -200,3 +202,50 @@ mob/verb/liedown()
 			view() << "[src] lies down!"
 			icon_state = "ground"
 
+mob/verb/Respawn()
+	if(dead)
+		if(key == "Vivalas")
+			var/mob/admin/A = new(locate(1,1,1))
+			A.res = 1
+			res = 1
+			client.mob = A
+			return
+		var/mob/M = new(locate(1,1,1))
+		M.res = 1
+		res = 1
+		client.mob = M
+	if(!dead)
+		usr << "You are not currently dead!"
+
+mob
+	var/tmp/res
+
+
+mob/verb/Sleep(n as num)
+	set desc = "Enter how long you want to sleep, in seconds. Sleeping regenerates health and limbs. (Not reversable!)"
+	view() << "\blue [usr] goes to sleep!"
+	density = 0
+	move = 0
+	icon_state = "ground"
+	client.eye = null
+	var/i
+	for(i=0,i<n,i++)
+		sleep(10)
+		if(prob(50))
+			health++
+		if(prob(5)&&!arms)
+			usr << "\green Your arms grow back!"
+			view() << "\blue [usr]'s arms grow back!"
+			arms = 1
+		if(prob(5)&&!legs)
+			usr << "\green Your legs grow back!"
+			view() << "\blue [usr]'s legs grow back!"
+			legs = 1
+		if(i == n)
+			break
+
+	density = 1
+	move = 1
+	icon_state = "up"
+	client.eye = usr
+	view() << "\blue [usr] wakes up!"

@@ -19,6 +19,10 @@ mob/proc/ChkHlth()
 		view() << "\red\bold [src] drops dead onto the floor!"
 		dead = 1
 		density = 0
+		for(var/obj/O in src)
+			O.loc = src.loc
+		src.equip = "None"
+
 	if(dead && health > 0)
 		icon = 'floosh.dmi'
 		icon_state = "up"
@@ -29,17 +33,18 @@ mob/proc/ChkHlth()
 
 
 mob/proc/Bleed(br,bs)
-	new/obj/blood(src.loc)
-	bleed = br
+	if(!(locate(/obj/blood) in loc)) new/obj/blood(loc)
 	src.ChkGore()
 	var/i
+	if(src.dead)
+		return
 	for(i=0,i<bs,i++)
 		if(dead)
 			br = 0
 		src.Dmg(br)
+		bleed = br
 		sleep(10)
 	if(i==bs)
-		br = 0
 		bleed = 0
 		src << "\green You stop bleeding!"
 		oview() << "[src] stops bleeding!"
@@ -57,7 +62,7 @@ mob/Move()
 
 
 mob/Move()
-	if(dead||!legs||stuck)
+	if(dead||!legs||stuck||!move)
 		return
 	..()
 
