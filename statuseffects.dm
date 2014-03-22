@@ -47,7 +47,7 @@ mob/proc/Bleed(br,bs)
 		sleep(10)
 	if(i==bs)
 		bleed = 0
-		src << "\green You stop bleeding!"
+		usr << "\green You stop bleeding!"
 		oview() << "[src] stops bleeding!"
 
 

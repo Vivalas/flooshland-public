@@ -29,13 +29,13 @@ mob
 	proc/ChkGore()
 		if(src.bleed == 1)
 			view() << "\red [src] begins to bleed!"
-			src << "\red You begin to bleed!"
+			usr << "\red You begin to bleed!"
 		if(src.bleed == 2)
 			view() << "\red [src] begins to bleed a lot!"
-			src << "\red You begin to bleed a lot!"
+			usr << "\red You begin to bleed a lot!"
 		if(src.bleed >= 3)
 			view() << "\red [src] turns limp and pale, as fountains of blood gush out of them!"
-			src << "\red Your body goes limp and pale as you bleed profusely, fountains of blood gushing out!"
+			usr << "\red Your body goes limp and pale as you bleed profusely, fountains of blood gushing out!"
 
 
 
