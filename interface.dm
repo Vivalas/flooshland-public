@@ -292,4 +292,5 @@ obj
 	Click()
 		if(usr.ChkUse())
 			if(src in view(1))
-				src.loc = usr.loc
+				if(src.loc <> usr.loc)
+					src.loc = usr.loc
