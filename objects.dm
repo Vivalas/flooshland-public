@@ -45,13 +45,13 @@ turf/grass
 	desc = "Lush green wavy grass!"
 	var/use = 0
 	icon = 'grass.dmi'
-	verb/eat()
+	verb/Eat()
 		if(usr.ChkUse())
 			set src in usr.loc
 			usr << "\blue You pull grass out of the ground and eat it!"
 			view() << "\blue [usr] must be crazy! They hungrily pull tufts of grass out of the ground and stuff it in their mouth!"
 
-	verb/lick()
+	verb/Lick()
 		set src in usr.loc
 		usr << "\blue You lick the grass!"
 		view() << "\blue [usr] licks the grass! What is wrong with them?"
@@ -139,8 +139,7 @@ obj/bombpotion
 	icon = 'potionbottle.dmi'
 	verb/Drink()
 		if(usr.ChkUse())
-			var/mob/m
-			m.Explode()
+			usr.Explode()
 
 	verb/Eat()
 		if(usr.ChkUse())
@@ -173,24 +172,28 @@ obj/Sword
 			usr.equip = "None"
 			view() << "\red [usr] sheathes their sword!"
 			return
-		usr.equip = src
+		else
+			usr.equip = src
+			view() << "\red [usr] draws their sword!"
 
 
 mob
 	DblClick(mob/M in view(1))
 		if(src == usr)
-			usr << "\red\bold You stab yourself with a sword!"
-			view() << "\red\bold [usr] stabs themself with a sword!"
-			src.Dmg(rand(5,20))
-			if(prob(10))
-				src.Bleed(rand(1,2),10)
-			return
+			if(istype(usr.equip,/obj/Sword))
+				if(usr.ChkUse())
+					view() << "\red\bold [usr] stabs themself with a sword!"
+					src.Dmg(rand(5,20))
+					if(prob(10))
+						src.Bleed(rand(1,2),10)
+					new/obj/blood(src.loc)
+					return
 		if(istype(usr.equip,/obj/Sword))
-			src.Dmg(rand(5,20))
-			new/obj/blood(src.loc)
-			src << "\red\bold You are slashed by a sword by [usr]!"
-			view() << "\red\bold [usr] slashes [src] with a sword!"
-			if(prob(10))
-				src.Bleed(rand(1,2),10)
+			if(usr.ChkUse())
+				src.Dmg(rand(5,20))
+				new/obj/blood(src.loc)
+				view() << "\red\bold [usr] slashes [src] with a sword!"
+				if(prob(10))
+					src.Bleed(rand(1,2),10)
 
 

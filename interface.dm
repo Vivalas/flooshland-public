@@ -23,8 +23,9 @@ mob/Stat()
 
 mob/verb/PickUp(obj/O in view(1))
 	set name = "Pick Up"
-	if(O.use)
-		O.loc = usr
+	if(usr.ChkUse())
+		if(O.use)
+			O.loc = usr
 
 
 
@@ -36,7 +37,7 @@ obj
 
 obj
 	Click()
-		if(src in usr)
+		if(src in usr&&usr.ChkUse())
 			loc = usr.loc
 
 
@@ -46,7 +47,7 @@ mob/verb/Say(m as text)
 	set category = "Chat"
 	set desc = "Enter what you want to say to those in sight!"
 	if(!dead)
-		view() << "\bold [src]\bold , \"[m]\""
+		view() << "\bold [src]\bold says, \"[m]\""
 
 mob/verb/OOC(m as text)
 	set category = "Chat"
@@ -138,7 +139,7 @@ mob/admin/verb/smite(mob/m)
 
 
 
-mob/verb/help(t as text)
+mob/verb/Help(t as text)
 	for(var/mob/admin/M in world)
 		M << "\blue HELP ([src]):\blue \red[t]"
 
@@ -161,7 +162,7 @@ mob/verb/Who()
 
 
 
-mob/verb/adminwho()
+mob/verb/Adminwho()
 	src << "\bold Active Administrators:\n"
 	for(var/mob/admin/M in world)
 		if(M.key)
@@ -185,16 +186,17 @@ mob/verb/SetName(T as text)
 
 mob/verb/liedown()
 	set name = "Lie Down/Get Up"
-	if(!density)
-		density = 1
-		stuck = 0
-		usr << "You stand up."
-		view() << "[src] stands up!"
-		icon_state = "up"
-	else
-		density = 0
-		stuck = 1
-		usr << "You lie down!"
-		view() << "[src] lies down!"
-		icon_state = "ground"
+	if(usr.ChkUse())
+		if(!density)
+			density = 1
+			stuck = 0
+			usr << "You stand up."
+			view() << "[src] stands up!"
+			icon_state = "up"
+		else
+			density = 0
+			stuck = 1
+			usr << "You lie down!"
+			view() << "[src] lies down!"
+			icon_state = "ground"
 

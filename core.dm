@@ -9,7 +9,7 @@ world
 	view = 6		// show up to 6 tiles outward from center (13x13 view)
 
 mob
-	step_size = 10
+	step_size = 8
 
 // Make objects move 8 pixels per tick when walking
 

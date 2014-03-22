@@ -18,12 +18,13 @@ mob/proc/ChkHlth()
 		src << "\red\bold You drop dead on to the floor!"
 		view() << "\red\bold [src] drops dead onto the floor!"
 		dead = 1
+		density = 0
 	if(dead && health > 0)
 		icon = 'floosh.dmi'
 		icon_state = "up"
 		dead = 0
 		view() << "\red\bold [src] has risen from the dead!"
-
+		density = 1
 
 
 
