@@ -142,7 +142,7 @@ obj/bombpotion
 	icon = 'potionbottle.dmi'
 	verb/Drink()
 		usr << "\blue You drink a Bomb Potion!"
-		view() << "\blue [use] drinks a Bomb Potion!"
+		view() << "\blue [usr] drinks a Bomb Potion!"
 		if(usr.ChkUse())
 			usr.Explode()
 			del src
@@ -181,31 +181,12 @@ obj/Sword
 			view() << "\red [usr] sheathes their sword!"
 			usr.overlays -= 'swordo.dmi'
 			return
-		else
-			if(usr.equip == "None")
-				usr.equip = src
-				view() << "\red [usr] draws their sword!"
-				usr.overlays += 'swordo.dmi'
+		if(usr.equip == "None")
+			usr.equip = src
+			view() << "\red [usr] draws their sword!"
+			usr.overlays += 'swordo.dmi'
+			return
 
-
-mob
-	DblClick(mob/M in view(1))
-		if(src == usr)
-			if(istype(usr.equip,/obj/Sword))
-				if(usr.ChkUse())
-					view() << "\red\bold [usr] stabs themself with a sword!"
-					src.Dmg(rand(5,20))
-					if(prob(10))
-						src.Bleed(rand(1,2),10)
-					if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(loc)
-					return
-		if(istype(usr.equip,/obj/Sword))
-			if(usr.ChkUse())
-				src.Dmg(rand(5,20))
-				if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(loc)
-				view() << "\red\bold [usr] slashes [src] with a sword!"
-				if(prob(10))
-					src.Bleed(rand(1,2),10)
 
 
 obj/Spawner
@@ -263,7 +244,7 @@ obj/deathsword
 
 
 mob
-	DblClick(mob/M in view(1))
+	Click(mob/M in view(1))
 		if(src == usr)
 			if(istype(usr.equip,/obj/deathsword))
 				if(usr.ChkUse())
@@ -273,13 +254,28 @@ mob
 						src.Bleed(rand(2,3),20)
 					if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(loc)
 					return
+			if(istype(usr.equip,/obj/Sword))
+				if(usr.ChkUse())
+					view() << "\red\bold [usr] stabs themself with a sword!"
+					src.Dmg(rand(5,20))
+					if(prob(10))
+						src.Bleed(rand(1,2),10)
+					if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(loc)
+					return
 		if(istype(usr.equip,/obj/deathsword))
 			if(usr.ChkUse())
 				src.Dmg(rand(20,70))
 				if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(loc)
-				view() << "\red\bold [usr] slashes [src] with a sword!"
+				view() << "\red\bold [usr] slashes [src] with a Garnellian Death Sword!"
 				if(prob(40))
 					src.Bleed(rand(2,3),20)
+		if(istype(usr.equip,/obj/Sword))
+			if(usr.ChkUse())
+				src.Dmg(rand(5,20))
+				if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(loc)
+				view() << "\red\bold [usr] slashes [src] with a sword!"
+				if(prob(10))
+					src.Bleed(rand(1,2),10)
 
 
 obj/Spawner2
@@ -361,15 +357,18 @@ mob
 							view() << "\red\bold [usr]'s rifle clicks!"
 							return
 					if(prob(rand(50,75)))
-						src.Dmg(rand(10,30))
-						if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(loc)
-						view() << "\red\bold [usr] shoots [src] with a rifle!"
-						if(prob(25))
-							src.Bleed(rand(1,2),10)
-						goto ammo
+						for(R in usr)
+							if(!R.ammo)
+								view() << "[usr]'s rifle clicks!"
+								return
+							R.ammo--
+							R.name = "Rifle([R.ammo])"
+
+							src.Dmg(rand(10,30))
+							if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(loc)
+							view() << "\red\bold [usr] shoots [src] with a rifle!"
+							if(prob(25))
+								src.Bleed(rand(1,2),10)
+							return
 					view() << "\red\bold [usr] misses [src]!"
-					:ammo
-					for(R in usr)
-						R.ammo--
-						R.name = "Rifle([R.ammo])"
 

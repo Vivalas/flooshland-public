@@ -23,39 +23,47 @@ mob/Stat()
 
 mob/verb/PickUp(obj/O in view(1))
 	set name = "Pick Up"
-	if(usr.ChkUse())
+	if(O in view(1))
 		if(O.use)
-			O.loc = usr
-			view() << "\blue [usr] picks up a [O]"
+			if(usr.ChkUse())
+				if(locate(/obj/Rifle) in usr)
+					if(istype(O,/obj/Rifle))
+						usr << "\red You can only hold one of each weapon at a time!"
+						return
+				if(locate(/obj/Sword) in usr)
+					if(istype(O,/obj/Sword))
+						usr << "\red You can only hold one of each weapon at a time!"
+						return
+				if(locate(/obj/deathsword) in usr)
+					if(istype(O,/obj/deathsword))
+						usr << "\red You can only hold one of each weapon at a time!"
+						return
+				O.loc = usr
+				view() << "\blue [usr] picks up a [O]"
+
 
 
 
 obj
 	DblClick()
 		if(src in view(1))
-			if(use&&usr.ChkUse())
-				if(locate(/obj/Rifle) in usr)
-					if(istype(src,/obj/Rifle))
-						usr << "\red You can only hold one of each weapon at a time!"
-						return
-			if(locate(/obj/Sword) in usr)
-				if(istype(src,/obj/Sword))
-					usr << "\red You can only hold one of each weapon at a time!"
-					return
-			if(locate(/obj/deathsword) in usr)
-				if(istype(src,/obj/deathsword))
-					usr << "\red You can only hold one of each weapon at a time!"
-					return
-			loc = usr
-			view() << "\blue [usr] picks up a [src]"
+			if(src.use)
+				if(usr.ChkUse())
+					if(locate(/obj/Rifle) in usr)
+						if(istype(src,/obj/Rifle))
+							usr << "\red You can only hold one of each weapon at a time!"
+							return
+					if(locate(/obj/Sword) in usr)
+						if(istype(src,/obj/Sword))
+							usr << "\red You can only hold one of each weapon at a time!"
+							return
+					if(locate(/obj/deathsword) in usr)
+						if(istype(src,/obj/deathsword))
+							usr << "\red You can only hold one of each weapon at a time!"
+							return
+					loc = usr
+					view() << "\blue [usr] picks up a [src]"
 
-
-obj
-	Click()
-		if(src in usr)
-			if(usr.ChkUse())
-
-				loc = usr.loc
 
 
 
@@ -232,11 +240,13 @@ mob/verb/Respawn()
 			var/mob/admin/A = new(locate(1,1,1))
 			A.res = 1
 			res = 1
+			A.name = usr.key
 			client.mob = A
 			return
 		var/mob/M = new(locate(1,1,1))
 		M.res = 1
 		res = 1
+		M.name = usr.key
 		client.mob = M
 	if(!dead)
 		usr << "You are not currently dead!"
@@ -256,7 +266,8 @@ mob/verb/Sleep(n as num)
 	for(i=0,i<n,i++)
 		sleep(10)
 		if(prob(50))
-			health++
+			if(health < 100)
+				health++
 		if(prob(5)&&!arms)
 			usr << "\green Your arms grow back!"
 			view() << "\blue [usr]'s arms grow back!"
@@ -295,3 +306,13 @@ obj
 		if(usr.ChkUse())
 			if(src.use)
 				src.loc = usr.loc
+
+
+
+obj
+	DblClick()
+		if(usr.ChkUse())
+			if(src in view(1))
+				loc = usr.loc
+				usr.overlays = null
+				usr.equip = "None"
