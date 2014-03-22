@@ -32,15 +32,30 @@ mob/verb/PickUp(obj/O in view(1))
 
 obj
 	DblClick()
-		if(use&&usr.ChkUse())
+		if(src in view(1))
+			if(use&&usr.ChkUse())
+				if(locate(/obj/Rifle) in usr)
+					if(istype(src,/obj/Rifle))
+						usr << "\red You can only hold one of each weapon at a time!"
+						return
+			if(locate(/obj/Sword) in usr)
+				if(istype(src,/obj/Sword))
+					usr << "\red You can only hold one of each weapon at a time!"
+					return
+			if(locate(/obj/deathsword) in usr)
+				if(istype(src,/obj/deathsword))
+					usr << "\red You can only hold one of each weapon at a time!"
+					return
 			loc = usr
 			view() << "\blue [usr] picks up a [src]"
 
 
 obj
 	Click()
-		if(src in usr&&usr.ChkUse())
-			loc = usr.loc
+		if(src in usr)
+			if(usr.ChkUse())
+
+				loc = usr.loc
 
 
 
@@ -186,6 +201,7 @@ mob/verb/SetName(T as text)
 	src.name = "[T] ([src.key])"
 	src.nt++
 
+mob/var/tmp/savedol
 mob/verb/liedown()
 	set name = "Lie Down/Get Up"
 	if(usr.ChkUse())
@@ -195,12 +211,20 @@ mob/verb/liedown()
 			usr << "You stand up."
 			view() << "[src] stands up!"
 			icon_state = "up"
+			if(istype(usr.equip,/obj/Sword))
+				usr.overlays += 'swordo.dmi'
+
+			if(istype(usr.equip,/obj/deathsword))
+				usr.overlays += 'dsword.dmi'
+
+
 		else
 			density = 0
 			stuck = 1
 			usr << "You lie down!"
 			view() << "[src] lies down!"
 			icon_state = "ground"
+			usr.overlays = null
 
 mob/verb/Respawn()
 	if(dead)
@@ -249,3 +273,23 @@ mob/verb/Sleep(n as num)
 	icon_state = "up"
 	client.eye = usr
 	view() << "\blue [usr] wakes up!"
+
+mob/admin
+	see_invisible = 100
+
+mob/admin/verb/Invisibility()
+	set category = "Admin"
+	if(!invisibility)
+		invisibility = 50
+		view() << "\blue [usr] vanishes from sight!"
+		return
+	else
+		invisibility = 0
+		view() << "\blue [usr] materializes!"
+		return
+
+obj
+	Click()
+		if(usr.ChkUse())
+			if(src in view(1))
+				src.loc = usr.loc

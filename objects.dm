@@ -175,13 +175,17 @@ obj/Sword
 			usr.Bleed(1,12)
 
 	verb/Equip()
+		set name = "Equip/Unequip"
 		if(src == usr.equip)
 			usr.equip = "None"
 			view() << "\red [usr] sheathes their sword!"
+			usr.overlays -= 'swordo.dmi'
 			return
 		else
-			usr.equip = src
-			view() << "\red [usr] draws their sword!"
+			if(usr.equip == "None")
+				usr.equip = src
+				view() << "\red [usr] draws their sword!"
+				usr.overlays += 'swordo.dmi'
 
 
 mob
@@ -215,6 +219,9 @@ obj/Spawner
 				if(prob(5))
 					new/obj/deathsword(src.loc)
 					return
+				if(prob(20))
+					new/obj/Rifle(src.loc)
+					return
 				new/obj/Sword(src.loc)
 
 
@@ -242,13 +249,17 @@ obj/deathsword
 			usr.Bleed(5,15)
 
 	verb/Equip()
+		set name = "Equip/Unequip"
 		if(src == usr.equip)
 			usr.equip = "None"
 			view() << "\red [usr] sheathes their Garnellian Death Sword"
+			usr.overlays -= 'dsword.dmi'
 			return
 		else
-			usr.equip = src
-			view() << "\red [usr] draws their Garnellian Death Sword!"
+			if(usr.equip == "None")
+				usr.equip = src
+				view() << "\red [usr] draws their Garnellian Death Sword!"
+				usr.overlays += 'dsword.dmi'
 
 
 mob
@@ -287,3 +298,78 @@ obj/Spawner2
 					new/obj/swagpotion
 					return
 				new/obj/bombpotion(src.loc)
+
+
+
+obj/Rifle
+	name = "Rifle(8)"
+	icon = 'rifle.dmi'
+	desc = "A smooth metal device that fires projectiles at amazing speed!"
+	use = 1
+	verb/Lick()
+		usr << "\blue You lick your rifle!"
+		view() << "\blue [usr] licks their rifle!"
+
+	verb/Eat()
+		usr << "\blue You gnaw on your rifle!"
+		view() << "\blue [usr] gnaws on their rifle!"
+
+	verb/Equip()
+		set name = "Equip/Unequip"
+		if(src == usr.equip)
+			usr.equip = "None"
+			view() << "\red [usr] slings their rifle over their shoulder!"
+			usr.overlays -= 'rifleo.dmi'
+			return
+		else
+			if(usr.equip == "None")
+				usr.equip = src
+				view() << "\red [usr] draws their rifle!"
+				usr.overlays += 'rifleo.dmi'
+	var/ammo = 8
+	var/tmp/rel = 0
+
+	verb/Reload()
+		if(usr.ChkUse())
+			var/start = usr.loc
+			usr << "\red You are reloading your rifle, don't move!"
+			view() << "\blue [usr] is trying to reload their rifle!"
+			rel = 1
+			sleep(55)
+			if(start <> usr.loc)
+				usr << "\red You moved when trying to reload your rifle!"
+				view() << "\red\bold [usr] failed to reload their rifle because they moved!"
+				rel = 0
+				return
+			view() << "\red\bold [usr] reloads their rifle!"
+			rel = 0
+			ammo = 8
+			src.name = "Rifle([ammo])"
+
+
+mob
+	DblClick(mob/M in view())
+		if(src == usr)
+			return
+		if(istype(usr.equip,/obj/Rifle))
+			if(usr.ChkUse())
+				for(var/obj/Rifle/R in usr)
+					if(R.rel)
+						return
+					for(R in usr)
+						if(!R.ammo)
+							view() << "\red\bold [usr]'s rifle clicks!"
+							return
+					if(prob(rand(50,75)))
+						src.Dmg(rand(10,30))
+						if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(loc)
+						view() << "\red\bold [usr] shoots [src] with a rifle!"
+						if(prob(25))
+							src.Bleed(rand(1,2),10)
+						goto ammo
+					view() << "\red\bold [usr] misses [src]!"
+					:ammo
+					for(R in usr)
+						R.ammo--
+						R.name = "Rifle([R.ammo])"
+

@@ -22,6 +22,7 @@ mob/proc/ChkHlth()
 		for(var/obj/O in src)
 			O.loc = src.loc
 		src.equip = "None"
+		src.overlays = null
 
 	if(dead && health > 0)
 		icon = 'floosh.dmi'
