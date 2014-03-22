@@ -18,5 +18,7 @@ mob/Logout()
 	if(!res)
 		world << "\bold [usr.key] has left the game! :("
 
-
+mob/Login()
+	usr << "<FONT SIZE=4><U>\blue FLOOSHLAND</FONT><U>\blue \n \bold Welcome to flooshland! The game is still under heavy development, but this is it's first official stress test!\n"
+	..()
 
