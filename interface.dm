@@ -170,9 +170,10 @@ mob/admin/verb/smite(mob/m)
 
 
 
-mob/verb/Help(t as text)
+mob/verb/AdminHelp(t as text)
 	for(var/mob/admin/M in world)
 		M << "\blue HELP ([src]):\blue \red[t]"
+		src << "\blue Your PM to the admins has been recieved."
 
 
 mob/admin/verb/achat(t as text)
@@ -183,7 +184,7 @@ mob/admin/verb/achat(t as text)
 
 mob/admin/verb/pm(mob/M in world, t as text)
 	set category = "Admin"
-	M << "\red\bold PM from Administrator\red \blue [src]\blue\bold : [t]"
+	M << "\red\bold PM from Administrator\red \blue [src]\blue\bold : [t] \bold(Respond with AdminHelp)"
 
 mob/verb/Who()
 	src << "\bold Active Players:\n"
@@ -342,5 +343,14 @@ mob/admin/verb/cleanup(n as num)
 			del B
 		return
 
+mob/admin/verb/jail(mob/M in world)
+	set category = "Admin"
+	for(var/obj/O in M)
+		del O
+	M.loc = locate(5,24,1)
+	M << "\red\bold <U><BIG> You have been jailed! All your items have been taken!"
+	M << "\red\n You will be held here until the admins are done with you!"
 
-
+mob/admin/verb/delete(atom/a in view())
+	set category = "Admin"
+	del a

@@ -25,3 +25,5 @@ world/New()
 		world << "\n\blue\bold The dawn breaks as the moon sweeps out of sight."
 
 
+world
+	hub = "Vivalas.Flooshland"

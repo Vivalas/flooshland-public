@@ -18,6 +18,7 @@
 #include "login.dm"
 #include "objects.dm"
 #include "statuseffects.dm"
+#include "terrain.dm"
 #include "world.dm"
 #include "world1.dmm"
 // END_INCLUDE

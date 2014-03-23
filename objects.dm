@@ -42,20 +42,6 @@ mob
 
 
 
-turf/grass
-	desc = "Lush green wavy grass!"
-	var/use = 0
-	icon = 'grass.dmi'
-	verb/Eat()
-		if(usr.ChkUse())
-			set src in usr.loc
-			usr << "\blue You pull grass out of the ground and eat it!"
-			view() << "\blue [usr] must be crazy! They hungrily pull tufts of grass out of the ground and stuff it in their mouth!"
-
-	verb/Lick()
-		set src in usr.loc
-		usr << "\blue You lick the grass!"
-		view() << "\blue [usr] licks the grass! What is wrong with them?"
 
 
 
