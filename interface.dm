@@ -255,35 +255,36 @@ mob
 
 mob/verb/Sleep(n as num)
 	set desc = "Enter how long you want to sleep, in seconds. Sleeping regenerates health and limbs. (Not reversable!)"
-	view() << "\blue [usr] goes to sleep!"
-	density = 0
-	move = 0
-	icon_state = "ground"
-	client.eye = null
-	usr.equip = "None"
-	usr.overlays = null
-	var/i
-	for(i=0,i<n,i++)
-		sleep(10)
-		if(prob(50))
-			if(health < 100)
-				health++
-		if(prob(5)&&!arms)
-			usr << "\green Your arms grow back!"
-			view() << "\blue [usr]'s arms grow back!"
-			arms = 1
-		if(prob(5)&&!legs)
-			usr << "\green Your legs grow back!"
-			view() << "\blue [usr]'s legs grow back!"
-			legs = 1
-		if(i == n)
-			break
+	if(!dead)
+		view() << "\blue [usr] goes to sleep!"
+		density = 0
+		move = 0
+		icon_state = "ground"
+		client.eye = null
+		usr.equip = "None"
+		usr.overlays = null
+		var/i
+		for(i=0,i<n,i++)
+			sleep(10)
+			if(prob(50))
+				if(health < 100)
+					health++
+			if(prob(5)&&!arms)
+				usr << "\green Your arms grow back!"
+				view() << "\blue [usr]'s arms grow back!"
+				arms = 1
+			if(prob(5)&&!legs)
+				usr << "\green Your legs grow back!"
+				view() << "\blue [usr]'s legs grow back!"
+				legs = 1
+			if(i == n)
+				break
 
-	density = 1
-	move = 1
-	icon_state = "up"
-	client.eye = usr
-	view() << "\blue [usr] wakes up!"
+		density = 1
+		move = 1
+		icon_state = "up"
+		client.eye = usr
+		view() << "\blue [usr] wakes up!"
 
 mob/admin
 	see_invisible = 100
