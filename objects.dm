@@ -27,15 +27,15 @@ mob
 			src << "\bold\red Your arms have been dismembered from your body!"
 			view() << "\bold\red [src]'s arms have been dismembered from their body!"
 	proc/ChkGore()
-		if(src.bleed == 1)
-			view() << "\red [src] begins to bleed!"
-			usr << "\red You begin to bleed!"
-		if(src.bleed == 2)
-			view() << "\red [src] begins to bleed a lot!"
-			usr << "\red You begin to bleed a lot!"
-		if(src.bleed >= 3)
-			view() << "\red [src] turns limp and pale, as fountains of blood gush out of them!"
-			usr << "\red Your body goes limp and pale as you bleed profusely, fountains of blood gushing out!"
+		if(bleed == 1)
+			view() << "\red [name] begins to bleed!"
+			src << "\red You begin to bleed!"
+		if(bleed == 2)
+			view() << "\red [name] begins to bleed a lot!"
+			src << "\red You begin to bleed a lot!"
+		if(bleed >= 3)
+			view() << "\red [name] turns limp and pale, as fountains of blood gush out of them!"
+			src << "\red Your body goes limp and pale as you bleed profusely, fountains of blood gushing out!"
 
 
 
@@ -190,6 +190,7 @@ obj/Sword
 
 
 obj/Spawner
+	name = "Weapon Spawner"
 	icon_state = "red"
 	var/atom/T
 	icon = 'spawner.dmi'

@@ -23,6 +23,7 @@ mob/proc/ChkHlth()
 			O.loc = src.loc
 		src.equip = "None"
 		src.overlays = null
+		name = "[name]'s corpse"
 
 	if(dead && health > 0)
 		icon = 'floosh.dmi'
@@ -35,19 +36,20 @@ mob/proc/ChkHlth()
 
 mob/proc/Bleed(br,bs)
 	if(!(locate(/obj/blood) in loc)) new/obj/blood(loc)
-	src.ChkGore()
 	var/i
-	if(src.dead)
+	if(dead)
 		return
+	bleed = br
+	ChkGore()
 	for(i=0,i<bs,i++)
 		if(dead)
 			br = 0
-		src.Dmg(br)
+		Dmg(br)
 		bleed = br
 		sleep(10)
 	if(i==bs)
 		bleed = 0
-		usr << "\green You stop bleeding!"
+		src << "\green You stop bleeding!"
 		oview() << "[src] stops bleeding!"
 
 
