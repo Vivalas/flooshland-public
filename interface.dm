@@ -312,10 +312,11 @@ mob/admin/verb/Invisibility()
 obj
 	DblClick()
 		if(usr.ChkUse())
-			if(src in view(1))
-				loc = usr.loc
-				usr.overlays = null
-				usr.equip = "None"
+			if(use)
+				if(src in view(1))
+					loc = usr.loc
+					usr.overlays = null
+					usr.equip = "None"
 
 mob/admin/verb/cleanup(n as num)
 	set category = "Admin"
