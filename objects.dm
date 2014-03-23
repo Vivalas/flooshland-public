@@ -244,7 +244,7 @@ obj/deathsword
 
 
 mob
-	Click(mob/M in view(1))
+	DblClick(mob/M in view(1))
 		if(src == usr)
 			if(istype(usr.equip,/obj/deathsword))
 				if(usr.ChkUse())
@@ -344,31 +344,25 @@ obj/Rifle
 
 
 mob
-	DblClick(mob/M in view())
-		if(src == usr)
-			return
-		if(istype(usr.equip,/obj/Rifle))
-			if(usr.ChkUse())
+	Click()
+		if(usr.ChkUse())
+			if(usr == src)
+				return
+			if(istype(usr.equip,/obj/Rifle))
 				for(var/obj/Rifle/R in usr)
 					if(R.rel)
 						return
-					for(R in usr)
-						if(!R.ammo)
-							view() << "\red\bold [usr]'s rifle clicks!"
-							return
-					if(prob(rand(50,75)))
-						for(R in usr)
-							if(!R.ammo)
-								view() << "[usr]'s rifle clicks!"
-								return
-							R.ammo--
-							R.name = "Rifle([R.ammo])"
-
-							src.Dmg(rand(10,30))
-							if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(loc)
-							view() << "\red\bold [usr] shoots [src] with a rifle!"
-							if(prob(25))
-								src.Bleed(rand(1,2),10)
-							return
-					view() << "\red\bold [usr] misses [src]!"
+					if(!R.ammo)
+						view() << "\red\bold [usr]'s rifle clicks!"
+						return
+					if(prob(60))
+						R.ammo--
+						src.Dmg(rand(15,30))
+						view() << "\red\bold [usr] shoots [src] with their rifle!"
+						if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(src.loc)
+						R.name = "Rifle([R.ammo])"
+						return
+					view() << "[usr] misses [src] with their rifle!"
+					R.ammo--
+					R.name = "Rifle([R.ammo])"
 

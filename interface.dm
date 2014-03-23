@@ -183,7 +183,8 @@ mob/verb/Who()
 	src << "\bold Active Players:\n"
 	for(var/mob/M in world)
 		if(M.key)
-			src << "[M.name]"
+			if(M.client)
+				src << "[M.name]"
 
 
 
@@ -191,7 +192,8 @@ mob/verb/Adminwho()
 	src << "\bold Active Administrators:\n"
 	for(var/mob/admin/M in world)
 		if(M.key)
-			src << "[M.name]"
+			if(M.client)
+				src << "[M.name]"
 
 
 
@@ -209,7 +211,7 @@ mob/verb/SetName(T as text)
 	src.name = "[T] ([src.key])"
 	src.nt++
 
-mob/var/tmp/savedol
+
 mob/verb/liedown()
 	set name = "Lie Down/Get Up"
 	if(usr.ChkUse())
@@ -219,11 +221,6 @@ mob/verb/liedown()
 			usr << "You stand up."
 			view() << "[src] stands up!"
 			icon_state = "up"
-			if(istype(usr.equip,/obj/Sword))
-				usr.overlays += 'swordo.dmi'
-
-			if(istype(usr.equip,/obj/deathsword))
-				usr.overlays += 'dsword.dmi'
 
 
 		else
@@ -233,6 +230,7 @@ mob/verb/liedown()
 			view() << "[src] lies down!"
 			icon_state = "ground"
 			usr.overlays = null
+			usr.equip = "None"
 
 mob/verb/Respawn()
 	if(dead)
@@ -262,6 +260,8 @@ mob/verb/Sleep(n as num)
 	move = 0
 	icon_state = "ground"
 	client.eye = null
+	usr.equip = "None"
+	usr.overlays = null
 	var/i
 	for(i=0,i<n,i++)
 		sleep(10)
@@ -292,9 +292,11 @@ mob/admin/verb/Invisibility()
 	set category = "Admin"
 	if(!invisibility)
 		invisibility = 50
+		density = 0
 		view() << "\blue [usr] vanishes from sight!"
 		return
 	else
+		density = 1
 		invisibility = 0
 		view() << "\blue [usr] materializes!"
 		return
@@ -307,3 +309,30 @@ obj
 				loc = usr.loc
 				usr.overlays = null
 				usr.equip = "None"
+
+mob/admin/verb/cleanup(n as num)
+	set category = "Admin"
+	if(n == 1)
+		world << "\bold\blue Deleting all corpses in 5 seconds! Respawn now!"
+		sleep(10)
+		world << "\blue\bold Deleting all corpses in 4 seconds!"
+		sleep(10)
+		world << "\bold\blue Deleting all corpses in 3 seconds!"
+		sleep(10)
+		world << "\bold\blue Deleting all corpses in 2 seconds!"
+		sleep(10)
+		world << "\bold\blue Deleting all corpses in 1 second!"
+		sleep(10)
+		world << "\bold\blue Deleting all corpses! May cause lag!"
+		for(var/mob/M in world)
+			if(M.dead)
+				del M
+		return
+	if(n == 2)
+		world << "\bold\blue Deleting all blood in the world! May cause lag!"
+		for(var/obj/blood/B in world)
+			del B
+		return
+
+
+
