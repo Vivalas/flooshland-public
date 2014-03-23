@@ -13,10 +13,12 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
+#include "Badmin powers pack(Plus lulzy descripts).dm"
 #include "core.dm"
 #include "interface.dm"
 #include "login.dm"
 #include "objects.dm"
+#include "objects2.dm"
 #include "statuseffects.dm"
 #include "terrain.dm"
 #include "world.dm"

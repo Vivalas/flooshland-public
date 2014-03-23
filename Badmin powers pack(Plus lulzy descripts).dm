@@ -33,7 +33,7 @@ mob/badmin/verb/hurt(mob/m in world,N as num)
 mob/badmin/verb/omnipotence(mob/M in world)
 	set category = "Badmin"
 	src.client.eye = M
-	
+
 mob/badmin/verb/doom(mob/m)
 	set category = "Badmin"
 	if(m.stuck)
@@ -48,7 +48,7 @@ mob/badmin/verb/doom(mob/m)
 	m << "\red\bold You scream in agony as your blood boils!"
 	view() << "\red\bold A fountain of blood erupts from [m]!"
 	m.stuck = 1
-	
+
 mob/verb/BadminGrief(t as text)
 	for(var/mob/badmin/M in world)
 		M << "\blue HELP ([src]):\blue \red[t]"
@@ -69,17 +69,17 @@ mob/badmin/verb/Swagpocalypse()
 	set category= "Badmin"
 	for(var/mob/M in world)
 		M.swag = 100
-	world() << "\blue Everything is suddenly enveloped in a mass of pure swag!"
+	world << "\blue Everything is suddenly enveloped in a mass of pure swag!"
 
-	
+
 mob/badmin/verb/achat(t as text)
 	set category = "Badmin"
 	for(var/mob/badmin/M in world)
 		M << "\green\bold ADMINCHAT [src]: [t]"
-		
+
 mob/badmin
 	see_invisible = 100
-	
+
 mob/badmin/verb/Invisibility()
 	set category = "Badmin"
 	if(!invisibility)

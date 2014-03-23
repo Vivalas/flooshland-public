@@ -13,6 +13,10 @@ turf/Dirt
 			usr << "\blue You lick the dirt!"
 			view() << "\blue [usr] licks the dirt!"
 
+	proc/Grow()
+		sleep(10)
+		new /turf/Tree  (src)
+
 
 turf/fwall
 	name = "Flooshium Wall"
@@ -44,7 +48,7 @@ turf/fdoor
 		if(!density)
 			density = 1
 			icon_state = "fdoor"
-			view() << "\blue [name] slides closed with a whir!"
+			view() << "\blue [name] slides shut with a whir!"
 			return
 		if(density)
 			density = 0
@@ -106,3 +110,25 @@ turf/grass
 		set src in view(0)
 		usr << "\blue You lick the grass!"
 		view() << "\blue [usr] licks the grass! What is wrong with them?"
+
+
+turf/Tree
+	density = 1
+	desc = "A tree of flooshy proportions."
+	icon = 'grass.dmi'
+	icon_state = "tree"
+	var/wood = 4
+	DblClick()
+		if(usr.ChkUse() && src in view(1))
+			if(istype(usr.equip,/obj/Axe))
+				view() << "\blue [usr] chops the tree!"
+				wood -= 1
+				new/obj/Wood(usr)
+				if(!wood)
+					new /turf/grass (src)
+					new /obj/tseeds (usr)
+					if(prob(50))
+						new /obj/tseeds (src)
+
+
+
