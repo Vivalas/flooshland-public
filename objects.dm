@@ -232,37 +232,38 @@ obj/deathsword
 
 mob
 	DblClick(mob/M in view(1))
-		if(src == usr)
+		if(src in view(1))
+			if(src == usr)
+				if(istype(usr.equip,/obj/deathsword))
+					if(usr.ChkUse())
+						view() << "\red\bold [usr] stabs themself with a Garnellian Death Sword!"
+						src.Dmg(rand(20,70))
+						if(prob(40))
+							src.Bleed(rand(2,3),20)
+						if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(loc)
+						return
+				if(istype(usr.equip,/obj/Sword))
+					if(usr.ChkUse())
+						view() << "\red\bold [usr] stabs themself with a sword!"
+						src.Dmg(rand(5,20))
+						if(prob(10))
+							src.Bleed(rand(1,2),10)
+						if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(loc)
+						return
 			if(istype(usr.equip,/obj/deathsword))
 				if(usr.ChkUse())
-					view() << "\red\bold [usr] stabs themself with a Garnellian Death Sword!"
 					src.Dmg(rand(20,70))
+					if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(loc)
+					view() << "\red\bold [usr] slashes [src] with a Garnellian Death Sword!"
 					if(prob(40))
 						src.Bleed(rand(2,3),20)
-					if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(loc)
-					return
 			if(istype(usr.equip,/obj/Sword))
 				if(usr.ChkUse())
-					view() << "\red\bold [usr] stabs themself with a sword!"
 					src.Dmg(rand(5,20))
+					if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(loc)
+					view() << "\red\bold [usr] slashes [src] with a sword!"
 					if(prob(10))
 						src.Bleed(rand(1,2),10)
-					if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(loc)
-					return
-		if(istype(usr.equip,/obj/deathsword))
-			if(usr.ChkUse())
-				src.Dmg(rand(20,70))
-				if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(loc)
-				view() << "\red\bold [usr] slashes [src] with a Garnellian Death Sword!"
-				if(prob(40))
-					src.Bleed(rand(2,3),20)
-		if(istype(usr.equip,/obj/Sword))
-			if(usr.ChkUse())
-				src.Dmg(rand(5,20))
-				if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(loc)
-				view() << "\red\bold [usr] slashes [src] with a sword!"
-				if(prob(10))
-					src.Bleed(rand(1,2),10)
 
 
 obj/Spawner2
@@ -333,6 +334,9 @@ obj/Rifle
 mob
 	Click()
 		if(usr.ChkUse())
+			if(/turf/fglass in get_line(usr,src))
+				usr << "\red Your rifle will not penetrate the glass!"
+				return
 			if(usr == src)
 				return
 			if(istype(usr.equip,/obj/Rifle))

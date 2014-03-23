@@ -27,3 +27,55 @@ world/New()
 
 world
 	hub = "Vivalas.Flooshland"
+
+
+proc/get_line(atom/A, atom/B)
+	if(!A || !B)
+		return list()
+
+	if(A.z != B.z)
+		return list()
+
+	var
+		x0 = A.x
+		x1 = B.x
+		y0 = A.y
+		y1 = B.y
+
+	var/vertical = abs(y1-y0) > abs(x1-x0)
+
+	if(vertical)
+		x0 = A.y
+		y0 = A.x
+		x1 = B.y
+		y1 = B.x
+
+	if(x0 > x1)
+		var/temp = x0
+		x0 = x1
+		x1 = temp
+
+		temp = y0
+		y0 = y1
+		y1 = temp
+
+	var
+		dx = x1 - x0
+		dy = abs(y1 - y0)
+		error = 0
+		derror = dy / dx
+		ystep = y0<y1?1:-1
+		y = y0
+
+	var/line[0]
+	for(var/x in x0 to x1)
+		if(vertical)
+			line += locate(y, x, A.z)
+		else
+			line += locate(x, y, A.z)
+		error += derror
+		if(error >= 0.5)
+			y += ystep
+			error -= 1
+
+	return line
