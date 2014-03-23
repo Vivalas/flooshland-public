@@ -71,12 +71,16 @@ obj
 mob/verb/Say(m as text)
 	set category = "Chat"
 	set desc = "Enter what you want to say to those in sight!"
+	if(!m)
+		return
 	if(!dead)
 		view() << "\bold [src]\bold says, \"[m]\""
 
 mob/verb/OOC(m as text)
 	set category = "Chat"
 	set desc = "Enter what you want to transmit on the OOC channel!"
+	if(!m)
+		return
 	if(!mute)
 		view() << "\bold\cyan OOC [src]: [m]"
 	else
@@ -85,6 +89,8 @@ mob/verb/OOC(m as text)
 mob/verb/me(m as text)
 	set category = "Chat"
 	set desc = "Enter what you want to emote!"
+	if(!m)
+		return
 	if(!dead)
 		view() << "\bold [src]\bold [m]"
 
