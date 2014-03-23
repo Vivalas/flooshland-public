@@ -132,3 +132,58 @@ turf/Tree
 
 
 
+turf/wwall
+	name = "Wooden Wall"
+	icon = 'grass.dmi'
+	icon_state = "wwall"
+	desc = "A sturdy wooden wall."
+	density = 1
+	opacity = 1
+
+turf/wfloor
+	name = "Wooden Floor"
+	icon = 'grass.dmi'
+	icon_state = "wfloor"
+	desc = "A sturdy wooden floor."
+
+turf/wdoor
+	name = "Wooden Door"
+	icon = 'grass.dmi'
+	icon_state = "wdoor"
+	desc = "A sturdy wooden door."
+	density = 1
+	layer = MOB_LAYER + 1
+	var/in1
+	var/in2
+	var/secure
+	var/list/authlist
+	authlist = list("vivalas")
+	proc/change()
+		if(!density)
+			density = 1
+			icon_state = "wdoor"
+			view() << "\blue [name] slides shut with a whir!"
+			return
+		if(density)
+			density = 0
+			icon_state = "wdooropen"
+			view() << "\blue [name] slides open with a whir!"
+			return
+
+	Click()
+		if(secure)
+			if(usr.ckey in authlist)
+				change()
+				view() << "\green *ACCESS GRANTED*: [usr]"
+				return
+			else
+				view() << "\red *ACCESS DENIED*: [usr]"
+				return
+		else
+			change()
+turf/wglass
+	name = "Wooden Window"
+	icon = 'grass.dmi'
+	icon_state = "wglass"
+	desc = "A sturdy wooden opening."
+	density = 1

@@ -41,6 +41,7 @@ mob/badmin/verb/doom(mob/m)
 		view() << "The Devil has spared [m]."
 		m.stuck = 0
 		return
+	if(!(locate(/obj/blood) in loc)) new/obj/blood(loc)
 	m.Explode()
 	m.Dmg(99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999)
 	m << "\bold\red You are blinded by an explosion of flesh!"

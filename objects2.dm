@@ -33,7 +33,28 @@ obj/Wood
 	icon_state = "wood"
 
 	verb/Craft()
-		var/choice = input("Choose what to craft.","Crafting") in list("Wall","Door","Window")
+		var/choice = input("Choose what to craft.","Crafting") in list("Wall","Door","Window","Floor")
+		if(choice == "Wall")
+			view() << "\blue [usr] builds a wall!"
+			new /turf/wwall (usr.loc)
+			del src
+			return
+		if(choice == "Door")
+			view() << "\blue [usr] builds a door!"
+			new /turf/wdoor (usr.loc)
+			del src
+			return
+		if(choice == "Window")
+			view() << "\blue [usr] builds a window!"
+			new /turf/wglass (usr.loc)
+			del src
+			return
+		if(choice == "Floor")
+			view() << "\blue [usr] builds a floor!"
+			new /turf/wfloor (usr.loc)
+			del src
+			return
+
 
 obj/tseeds
 	name = "Tree Seeds"
@@ -58,3 +79,15 @@ obj/tseeds
 				return
 			D.Grow()
 			del src
+
+
+obj/Spawner3
+	name = "Tool"
+	var/atom/T
+	icon = 'spawner.dmi'
+	icon_state = "green"
+	DblClick()
+		set src in view(1)
+		if(usr.ChkUse())
+			if(!(locate(/obj/Axe) in src.loc))
+				new/obj/Axe(src.loc)
