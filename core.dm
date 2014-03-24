@@ -8,12 +8,24 @@ world
 
 	view = 6		// show up to 6 tiles outward from center (13x13 view)
 
-mob
-	step_size = 8
+
 
 // Make objects move 8 pixels per tick when walking
 
 
+mob
+    var
+        move_delay = 2
+        tmp
+            move_time = 0
+
+    Move()
+        if(world.time < move_time)
+            return
+
+        // set the move_time for move_delay ticks from now
+        move_time = world.time + move_delay
+        return ..() // do the default Move() proc and return what it ret
 
 
 
