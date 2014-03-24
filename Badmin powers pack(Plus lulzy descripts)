@@ -49,7 +49,7 @@ mob/badmin/verb/doom(mob/m)
 	view() << "\red\bold A fountain of blood erupts from [m]!"
 	m.stuck = 1
 	
-ob/verb/BadminGrief(t as text)
+mob/verb/BadminGrief(t as text)
 	for(var/mob/badmin/M in world)
 		M << "\blue HELP ([src]):\blue \red[t]"
 		src << "\blue Your PM to the badmin has been recieved."
@@ -65,12 +65,12 @@ mob/badmin/verb/Dungeuon(mob/M in world)
 	M << "\red\bold <U><BIG> You have been thrown in the dungeun! All your items have been taken!"
 	M << "\red\n You will be held here until the badmin is done with you!"
 
-mob/badmin/verb/Swagpocalypse(mob in world)
+mob/badmin/verb/Swagpocalypse()
 	set category= "Badmin"
-	if(!swag)
-	swag = 100
-	view() << "\blue Everything is suddenly enveloped in a mass of pure swag!"
-	return
+	for(var/mob/M in world)
+		M.swag = 100
+	world() << "\blue Everything is suddenly enveloped in a mass of pure swag!"
+
 	
 mob/badmin/verb/achat(t as text)
 	set category = "Badmin"
