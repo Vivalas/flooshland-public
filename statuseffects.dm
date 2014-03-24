@@ -83,4 +83,7 @@ mob/proc/Explode()
 		M.ChkLimbs()
 		if(prob(95))
 			spawn() M.Bleed(rand(1,5),15)
-
+		M.overlays = null
+		M.equip = "None"
+	for(var/turf/T in view(2))
+		spawn() new/obj/explode (T)

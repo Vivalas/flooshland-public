@@ -83,7 +83,6 @@ obj/tseeds
 
 obj/Spawner3
 	name = "Tool"
-	var/atom/T
 	icon = 'spawner.dmi'
 	icon_state = "green"
 	DblClick()
@@ -91,3 +90,41 @@ obj/Spawner3
 		if(usr.ChkUse())
 			if(!(locate(/obj/Axe) in src.loc))
 				new/obj/Axe(src.loc)
+
+turf/Hole
+	icon = 'grass.dmi'
+	icon_state = "hole"
+	desc = "A dark hole that leads to the depths below."
+	Entered()
+		usr.loc = locate(src.x,src.y,2)
+
+turf/dwall
+	name = "Dirt Wall"
+	icon = 'grass.dmi'
+	icon_state = "dwall"
+	desc = "A solid wall made out of packed dirt!"
+	density = 1
+	opacity = 1
+	verb/Eat()
+		set src in view(1)
+		if(usr.ChkUse())
+			usr << "\blue You scoop dirt out of the wall and eat it!"
+			view() << "\blue [usr] eats dirt out of the wall!"
+			new /turf/Dirt(src)
+
+turf/Dexit
+	desc = "A passage to the surface!"
+	name = "Exit"
+	icon = 'grass.dmi'
+	icon_state = "holeexit"
+	Entered()
+		usr.loc = locate(src.x,src.y,1)
+
+obj/explode
+	name = "Explosion"
+	icon  = 'grass.dmi'
+	icon_state = "explosion"
+	layer = MOB_LAYER + 1
+	New()
+		sleep(10)
+		del src

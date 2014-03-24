@@ -43,7 +43,7 @@
 "Q" = (/obj/deathsword,/turf/grass,/area)
 "R" = (/obj/Axe,/turf/grass,/area)
 "S" = (/mob{name = "Floosh of Welcoming"},/turf/grass,/area)
-"T" = (/turf,/area)
+"T" = (/turf/dwall,/area)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab

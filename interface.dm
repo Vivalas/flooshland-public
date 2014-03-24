@@ -191,7 +191,7 @@ mob/verb/Who()
 	for(var/mob/M in world)
 		if(M.key)
 			if(M.client)
-				src << "[M.name]"
+				src << "[M.key]"
 
 
 
@@ -200,7 +200,11 @@ mob/verb/Adminwho()
 	for(var/mob/admin/M in world)
 		if(M.key)
 			if(M.client)
-				src << "[M.name]"
+				src << "[M.key]"
+	for(var/mob/badmin/B in world)
+		if(B.key)
+			if(B.client)
+				src << "[B.key]"
 
 
 
@@ -293,12 +297,12 @@ mob/verb/Sleep(n as num)
 				legs = 1
 			if(i == n)
 				break
-
-		density = 1
-		move = 1
-		icon_state = "up"
-		client.eye = usr
-		view() << "\blue [usr] wakes up!"
+		if(!dead)
+			density = 1
+			move = 1
+			icon_state = "up"
+			client.eye = usr
+			view() << "\blue [usr] wakes up!"
 
 mob/admin
 	see_invisible = 100
@@ -361,3 +365,8 @@ mob/admin/verb/jail(mob/M in world)
 mob/admin/verb/delete(atom/a in view())
 	set category = "Admin"
 	del a
+
+mob/admin/verb/sethealth(mob/M in world,n as num)
+	set category = "Admin"
+	M.health = n
+	M.Dmg(0)
