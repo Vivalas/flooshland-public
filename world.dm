@@ -5,6 +5,7 @@ world/New()
 
 
 /proc/DayNight()
+	set background = 1
 	for()
 		world << "\n\blue\bold The sun climbs over the eastern horizon."
 		sleep(1200)

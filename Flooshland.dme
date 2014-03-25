@@ -14,6 +14,7 @@
 
 // BEGIN_INCLUDE
 #include "Badmin powers pack(Plus lulzy descripts).dm"
+#include "clothes.dm"
 #include "core.dm"
 #include "interface.dm"
 #include "login.dm"

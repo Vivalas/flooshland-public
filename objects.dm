@@ -334,9 +334,6 @@ obj/Rifle
 mob
 	Click()
 		if(usr.ChkUse())
-			if(/turf/fglass in get_line(usr,src))
-				usr << "\red Your rifle will not penetrate the glass!"
-				return
 			if(usr == src)
 				return
 			if(istype(usr.equip,/obj/Rifle))
