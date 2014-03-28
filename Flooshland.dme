@@ -16,6 +16,7 @@
 #include "Badmin powers pack(Plus lulzy descripts).dm"
 #include "clothes.dm"
 #include "core.dm"
+#include "interactions.dm"
 #include "interface.dm"
 #include "login.dm"
 #include "objects.dm"
@@ -25,5 +26,6 @@
 #include "world.dm"
 #include "world1.dmm"
 // END_INCLUDE
+
 
 

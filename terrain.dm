@@ -16,8 +16,8 @@ turf/Dirt
 			view() << "\blue [usr] licks the dirt!"
 
 	proc/Grow()
-		sleep(10)
-		new /turf/Tree  (src)
+		sleep(50)
+		new /turf/Tree  (loc)
 
 
 turf/fwall

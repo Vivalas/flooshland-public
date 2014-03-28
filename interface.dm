@@ -18,6 +18,7 @@ mob/Stat()
 
 
 	statpanel("Inventory",usr.contents)
+	statpanel("Clothes",usr.torso)
 
 
 
@@ -38,8 +39,9 @@ mob/verb/PickUp(obj/O in view(1))
 					if(istype(O,/obj/deathsword))
 						usr << "\red You can only hold one of each weapon at a time!"
 						return
+
 				O.loc = usr
-				view() << "\blue [usr] picks up a [O]"
+				view() << "\blue [usr] picks up \a [O]"
 
 
 
@@ -61,6 +63,8 @@ obj
 						if(istype(src,/obj/deathsword))
 							usr << "\red You can only hold one of each weapon at a time!"
 							return
+
+
 					loc = usr
 					view() << "\blue [usr] picks up a [src]"
 
@@ -154,7 +158,7 @@ mob/admin/verb/omnipotence(mob/M in world)
 
 
 
-mob/admin/verb/smite(mob/m)
+mob/admin/verb/smite(mob/m in world)
 	set category = "Admin"
 	if(m.stuck)
 		m << "\green The gods have spared you!"
@@ -228,20 +232,31 @@ mob/verb/liedown()
 	if(usr.ChkUse())
 		if(!density)
 			density = 1
-			stuck = 0
+			move = 1
 			usr << "You stand up."
 			view() << "[src] stands up!"
 			icon_state = "up"
+			for(var/obj/clothes/C in usr.contents)
+				if(C.worn)
+					usr.underlays = null
+					C.icon = 'up.dmi'
+					usr.underlays += C
 
 
 		else
 			density = 0
-			stuck = 1
+			move = 0
 			usr << "You lie down!"
 			view() << "[src] lies down!"
 			icon_state = "ground"
 			usr.overlays = null
 			usr.equip = "None"
+			for(var/obj/clothes/C in usr.contents)
+				if(C.worn)
+					usr.underlays = null
+					C.icon = 'down.dmi'
+					usr.underlays += C
+
 
 mob/verb/Respawn()
 	if(dead)
@@ -278,9 +293,14 @@ mob/verb/Sleep(n as num)
 		density = 0
 		move = 0
 		icon_state = "ground"
-		client.eye = null
 		usr.equip = "None"
 		usr.overlays = null
+		client.eye = null
+		for(var/obj/clothes/C in usr.contents)
+			if(C.worn)
+				usr.underlays = null
+				C.icon = 'down.dmi'
+				usr.underlays += C
 		var/i
 		for(i=0,i<n,i++)
 			sleep(10)
@@ -303,6 +323,11 @@ mob/verb/Sleep(n as num)
 			icon_state = "up"
 			client.eye = usr
 			view() << "\blue [usr] wakes up!"
+			for(var/obj/clothes/C in usr.contents)
+				if(C.worn)
+					usr.underlays = null
+					C.icon = 'up.dmi'
+					usr.underlays += C
 
 mob/admin
 	see_invisible = 100
@@ -322,13 +347,26 @@ mob/admin/verb/Invisibility()
 
 
 obj
+	Click()
+		if(usr.ChkUse())
+			if(weld)
+				return
+			if(src in view(1))
+				loc = usr.loc
+				usr.overlays = null
+				usr.equip = "None"
+
+
+obj/clothes
 	DblClick()
 		if(usr.ChkUse())
 			if(use)
 				if(src in view(1))
+					if(worn)
+						return
+					icon = 'up.dmi'
 					loc = usr.loc
-					usr.overlays = null
-					usr.equip = "None"
+
 
 mob/admin/verb/cleanup(n as num)
 	set category = "Admin"
@@ -370,3 +408,5 @@ mob/admin/verb/sethealth(mob/M in world,n as num)
 	set category = "Admin"
 	M.health = n
 	M.Dmg(0)
+
+obj/var/weld = 0

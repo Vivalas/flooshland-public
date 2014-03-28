@@ -58,10 +58,6 @@ obj/swagpotion
 			usr << "\blue You drink a swag potion!"
 			view() << "\blue [usr] drinks a swag potion!"
 			del src
-	verb/Eat()
-		if(usr.ChkUse())
-			usr << "\blue You gnaw on the potion's bottle!"
-			view() << "\blue [usr] gnaws on the swag potion!"
 
 
 /*obj/vm
@@ -93,10 +89,6 @@ obj/DeathPotion
 			usr.Dmg(25)
 			usr.Bleed(rand(1,2),rand(8,15))
 			del src
-	verb/Eat()
-		if(usr.ChkUse())
-			usr << "\blue You gnaw on the potion's bottle!"
-			view() << "\blue [usr] gnaws on the Death Potion!"
 
 
 obj/blood
@@ -133,11 +125,6 @@ obj/bombpotion
 			usr.Explode()
 			del src
 
-	verb/Eat()
-		if(usr.ChkUse())
-			usr << "\blue You gnaw on the potion's bottle!"
-			view() << "\blue [usr] gnaws on the Bomb Potion!"
-
 
 
 obj/Sword
@@ -146,19 +133,12 @@ obj/Sword
 	icon_state = "normal"
 	use = 1
 
-	verb/Lick()
-		if(usr.ChkUse())
-			usr << "\blue You lick the sword!"
-			view() << "\blue [usr] licks the sword with passion!"
+	Eat()
+		.=..()
+		usr.Bleed(1,10)
+		usr.Dmg(1)
+		view() << "\red [usr] cuts their mouth on the sword!"
 
-
-	verb/Eat()
-		if(usr.ChkUse())
-			usr << "\blue You bite the sword!"
-			view() << "\blue [usr] bites the sword!"
-			usr << "\red You cut your mouth! Ouch!"
-			view() << "\red [usr] cuts their mouth! Ouch!"
-			usr.Bleed(1,12)
 
 	verb/Equip()
 		set name = "Equip/Unequip"
@@ -176,6 +156,7 @@ obj/Sword
 
 
 obj/Spawner
+	weld = 1
 	name = "Weapon Spawner"
 	icon_state = "red"
 	var/atom/T
@@ -200,21 +181,18 @@ obj/deathsword
 	icon_state = "death"
 	use = 1
 
-	verb/Lick()
-		if(usr.ChkUse())
-			usr << "\blue You lick the Garnellian Death Sword"
-			view() << "\blue [usr] licks the Garnellian Death Sword with passion!"
-			usr.Explode()
-			del src
 
+	Eat()
+		.=..()
+		view() << "\red [usr]'s mouth burns and sears, blood spurting out! Their mouth is pulverized by the energy flowing through the sword!"
+		usr.Dmg(30)
+		usr.Bleed(4,15)
 
-	verb/Eat()
-		if(usr.ChkUse())
-			usr << "\blue You bite the sword!"
-			view() << "\blue [usr] bites the sword!"
-			usr << "\red Your mouth burns and sears, and blood spurts out!"
-			view() << "\red [usr]'s mouth is pulverised by the Garnellian Death Sword as he bites it!"
-			usr.Bleed(5,15)
+	Lick()
+		.=..()
+		usr.Explode()
+		del src
+
 
 	verb/Equip()
 		set name = "Equip/Unequip"
@@ -267,6 +245,7 @@ mob
 
 
 obj/Spawner2
+	weld = 1
 	name = "Potion Spawner"
 	var/atom/T
 	icon = 'spawner.dmi'
@@ -290,13 +269,7 @@ obj/Rifle
 	icon = 'rifle.dmi'
 	desc = "A smooth metal device that fires projectiles at amazing speed!"
 	use = 1
-	verb/Lick()
-		usr << "\blue You lick your rifle!"
-		view() << "\blue [usr] licks their rifle!"
 
-	verb/Eat()
-		usr << "\blue You gnaw on your rifle!"
-		view() << "\blue [usr] gnaws on their rifle!"
 
 	verb/Equip()
 		set name = "Equip/Unequip"

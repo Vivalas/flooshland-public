@@ -4,15 +4,6 @@ obj/Axe
 	icon = 'sword.dmi'
 	icon_state = "axe"
 
-	verb/Lick()
-		if(usr.ChkUse())
-			usr << "\blue You lick the axe!"
-			view() << "\blue [usr] licks an axe!"
-	verb/Eat()
-		if(usr.ChkUse())
-			usr << "\blue You gnaw on the axe!"
-			view() << "\blue [usr] gnaws on an axe!"
-
 	verb/Equip()
 		set name = "Equip/Unequip"
 		if(src == usr.equip)
@@ -62,26 +53,19 @@ obj/tseeds
 	desc = "Small vessels of life that can grow into trees!"
 	icon = 'grass.dmi'
 	icon_state = "seeds"
-	verb/Eat()
-		if(usr.ChkUse())
-			view() << "\blue [usr] eats some tree seeds!"
-			usr << "\blue You eat some tree seeds."
-			del src
-	verb/Lick()
-		if(usr.ChkUse())
-			usr << "\blue You lick some tree seeds!"
-			view() << "\blue [usr] licks some tree seeds! Yuck!"
-
+	edible = 1
 	verb/Plant(turf/Dirt/D in view(1))
 		if(usr.ChkUse())
 			view() << "\blue [usr] plants some tree seeds!"
 			if(!istype(D,/turf/Dirt))
 				return
-			D.Grow()
+			invisibility = 101
+			name = null
 			del src
 
 
 obj/Spawner3
+	weld = 1
 	name = "Tool"
 	icon = 'spawner.dmi'
 	icon_state = "green"
@@ -105,6 +89,7 @@ turf/dwall
 	desc = "A solid wall made out of packed dirt!"
 	density = 1
 	opacity = 1
+	layer = MOB_LAYER + 1
 	verb/Eat()
 		set src in view(1)
 		if(usr.ChkUse())
@@ -128,5 +113,49 @@ obj/explode
 	New()
 		sleep(10)
 		del src
+
+
+obj/Crate
+	icon = 'objects.dmi'
+	icon_state = "crate"
+	desc = "A shiny metal box to fill with junk!"
+	var/open
+	verb/toggle()
+		set src in view(1)
+		set name = "Open/Close"
+		if(usr.ChkUse())
+			if(open)
+				icon_state = "crate"
+				open = 0
+				for(var/obj/O in loc)
+					if(O <> src)
+						O.loc = src
+			else
+				icon_state = "crateo"
+				for(var/obj/O in src.contents)
+					O.loc = loc
+				open = 1
+
+
+obj/Spawner4
+	weld = 1
+	name = "Clothes Spawner"
+	icon_state = "purple"
+	var/atom/T
+	icon = 'spawner.dmi'
+	DblClick()
+		set src in view(1)
+		if(usr.ChkUse())
+			if(!(locate(/obj/clothes) in src.loc))
+				if(prob(5))
+					new/obj/clothes/that(src.loc)
+					return
+				if(prob(25))
+					new/obj/clothes/greent(src.loc)
+					return
+				new/obj/clothes/redt(src.loc)
+
+
+
 
 

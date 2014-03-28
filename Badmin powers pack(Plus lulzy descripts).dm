@@ -34,14 +34,13 @@ mob/badmin/verb/omnipotence(mob/M in world)
 	set category = "Badmin"
 	src.client.eye = M
 
-mob/badmin/verb/doom(mob/m)
+mob/badmin/verb/doom(mob/m in world)
 	set category = "Badmin"
 	if(m.stuck)
 		m << "\green The Devil has spared you!"
 		view() << "The Devil has spared [m]."
 		m.stuck = 0
 		return
-	if(!(locate(/obj/blood) in loc)) new/obj/blood(loc)
 	m.Explode()
 	m.Dmg(99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999)
 	m << "\bold\red You are blinded by an explosion of flesh!"

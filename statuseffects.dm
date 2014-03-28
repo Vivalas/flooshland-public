@@ -19,10 +19,14 @@ mob/proc/ChkHlth()
 		view() << "\red\bold [src] drops dead onto the floor!"
 		dead = 1
 		density = 0
+		for(var/obj/clothes/C in src)
+			C.icon = 'up.dmi'
+			C.layer = OBJ_LAYER
 		for(var/obj/O in src)
 			O.loc = src.loc
 		src.equip = "None"
 		src.overlays = null
+		src.underlays = null
 		name = "[name]'s corpse"
 
 	if(dead && health > 0)

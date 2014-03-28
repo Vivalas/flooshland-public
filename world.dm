@@ -1,11 +1,13 @@
 world/New()
 	spawn(10) DayNight()
+	for(var/mob/M in world)
+		for(var/obj/clothes/C in M.contents)
+			M.underlays = M
 	..()
 
 
 
 /proc/DayNight()
-	set background = 1
 	for()
 		world << "\n\blue\bold The sun climbs over the eastern horizon."
 		sleep(1200)
