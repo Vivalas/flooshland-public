@@ -24,7 +24,7 @@ obj/Wood
 	icon_state = "wood"
 
 	verb/Craft()
-		var/choice = input("Choose what to craft.","Crafting") in list("Wall","Door","Window","Floor")
+		var/choice = input("Choose what to craft.","Crafting") in list("Wall","Door","Window","Floor","Ramp")
 		if(choice == "Wall")
 			view() << "\blue [usr] builds a wall!"
 			new /turf/wwall (usr.loc)
@@ -43,6 +43,11 @@ obj/Wood
 		if(choice == "Floor")
 			view() << "\blue [usr] builds a floor!"
 			new /turf/wfloor (usr.loc)
+			del src
+			return
+		if(choice == "Ramp")
+			view() << "\blue [usr] builds a ramp!"
+			new /obj/Ramp (usr.loc)
 			del src
 			return
 
@@ -80,7 +85,9 @@ turf/Hole
 	icon_state = "hole"
 	desc = "A dark hole that leads to the depths below."
 	Entered()
-		usr.loc = locate(src.x,src.y,2)
+		if(src.z == 6)
+			return
+		usr.loc = locate(src.x,src.y,src.z + 1)
 
 turf/dwall
 	name = "Dirt Wall"
@@ -103,9 +110,10 @@ turf/Dexit
 	icon = 'grass.dmi'
 	icon_state = "holeexit"
 	Entered()
-		usr.loc = locate(src.x,src.y,1)
+		usr.loc = locate(src.x,src.y,src.z - 1)
 
 obj/explode
+	weld = 1
 	name = "Explosion"
 	icon  = 'grass.dmi'
 	icon_state = "explosion"
@@ -154,6 +162,28 @@ obj/Spawner4
 					new/obj/clothes/greent(src.loc)
 					return
 				new/obj/clothes/redt(src.loc)
+
+obj/Ramp
+	weld = 1
+	desc = "For moving objects up and down!"
+	use = 0
+	icon = 'objects.dmi'
+	icon_state = "ramp"
+	Click()
+		for(var/obj/O in src.loc)
+			if(O == src)
+				continue
+			if(z <> 1)
+				if(locate(/obj/Ramp/) in locate(x,y,z - 1))
+					view() << "\blue [usr] pushes [O] up the ramp!"
+					O.loc = locate(x,y,z - 1)
+					return
+			if(z <> 6)
+				if(locate(/obj/Ramp/) in locate(x,y,z + 1))
+					view() << "\blue [usr] pushs [O] down the ramp!"
+					O.loc = locate(x,y,z + 1)
+					return
+
 
 
 

@@ -109,7 +109,10 @@ mob/admin
 mob/admin/verb/mute(mob/M in world)
 	set category = "Admin"
 	if(M.key)
-		M.mute = 1
+		if(!M.mute)
+			M.mute = 1
+		else
+			M.mute = 0
 
 mob/admin/verb/reboot()
 	set category = "Admin"

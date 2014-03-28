@@ -7,7 +7,8 @@ turf/Dirt
 		if(usr.ChkUse())
 			usr << "\blue You scoop handfuls of dirt from the ground and shove them in your mouth!"
 			view() << "\blue [usr] is scooping [src] from the ground and eating it!"
-			new /turf/Dexit (locate(usr.x,usr.y,2))
+			if(usr.z <> 6)
+				new /turf/Dexit (locate(usr.x,usr.y,usr.z + 1))
 			new /turf/Hole (src)
 	verb/Lick()
 		set src in view(0)

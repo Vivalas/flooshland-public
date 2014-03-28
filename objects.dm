@@ -92,6 +92,7 @@ obj/DeathPotion
 
 
 obj/blood
+	weld = 1
 	desc = "A red liquid that is part of most animals' circulatory system."
 	use = 0
 	icon = 'blood.dmi'
