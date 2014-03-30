@@ -1,8 +1,21 @@
 world/New()
 	spawn(10) DayNight()
 	for(var/mob/M in world)
+		for(var/obj/O in M.loc)
+			if(O.use)
+				O.loc = M
+	for(var/mob/M in world)
 		for(var/obj/clothes/C in M.contents)
 			M.underlays = M
+
+
+	for(var/obj/Crate/C in world)
+		for(var/obj/O in C.loc)
+			if(O == C)
+				continue
+			if(O.use)
+				C.contents.Add(O)
+
 	..()
 
 

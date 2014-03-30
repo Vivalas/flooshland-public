@@ -5,10 +5,14 @@ turf/Dirt
 	verb/Eat()
 		set src in view(0)
 		if(usr.ChkUse())
+			for(var/turf/T in locate(src.x,src.y,src.z + 1))
+				if(ispath(T,/turf/f))
+					usr << "\blue You try to dig out the dirt but there is something hard underneathe!"
+					return
 			usr << "\blue You scoop handfuls of dirt from the ground and shove them in your mouth!"
 			view() << "\blue [usr] is scooping [src] from the ground and eating it!"
 			if(usr.z <> 6)
-				new /turf/Dexit (locate(usr.x,usr.y,usr.z + 1))
+				new /turf/Dexit (locate(src.x,src.y,src.z + 1))
 			new /turf/Hole (src)
 	verb/Lick()
 		set src in view(0)
@@ -21,7 +25,7 @@ turf/Dirt
 		new /turf/Tree  (loc)
 
 
-turf/fwall
+turf/f/fwall
 	name = "Flooshium Wall"
 	icon = 'grass.dmi'
 	icon_state = "fwall"
@@ -29,13 +33,18 @@ turf/fwall
 	density = 1
 	opacity = 1
 
-turf/ffloor
+
+
+
+
+
+turf/f/ffloor
 	name = "Flooshium Floor"
 	icon = 'grass.dmi'
 	icon_state = "ffloor"
 	desc = "A sleek blue floor that is smooth to the touch."
 
-turf/fdoor
+turf/f/fdoor
 	name = "Flooshium Door"
 	icon = 'grass.dmi'
 	icon_state = "fdoor"
@@ -70,7 +79,36 @@ turf/fdoor
 				return
 		else
 			change()
-turf/fglass
+
+
+	fbdoor
+		name = "Flooshium Blast Door"
+		icon = 'grass.dmi'
+		icon_state = "fbdoor"
+		desc = "A strong impenetrable door."
+		density = 1
+		opacity = 1
+		layer = MOB_LAYER + 1
+		change()
+			if(!density)
+				density = 1
+				icon_state = "fbdoor"
+				view() << "\blue [name] clamps shut with a hiss!"
+				return
+			if(density)
+				density = 0
+				opacity = 0
+				icon_state = "fbdooropen"
+				view() << "\blue [name] hisses open!"
+				return
+
+	Click()
+		return
+
+
+
+
+turf/f/fglass
 	name = "Flooshium Glass"
 	icon = 'grass.dmi'
 	icon_state = "fglass"
@@ -92,9 +130,15 @@ obj/Lever
 			else
 				icon_state = "lever"
 
-			for(var/turf/fdoor/f in world)
+			for(var/turf/f/fdoor/f in world)
 				if(f.ini == src.ini)
 					f.change()
+			for(var/turf/f/fdoor/fbdoor)
+				if(fbdoor.ini == src.ini in world)
+					fbdoor.change()
+
+
+
 
 
 turf/grass
@@ -190,3 +234,4 @@ turf/wglass
 	icon_state = "wglass"
 	desc = "A sturdy wooden opening."
 	density = 1
+

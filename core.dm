@@ -6,7 +6,7 @@ world
 	fps = 25		// 25 frames per second
 	icon_size = 32	// 32x32 icon size by default
 
-	view = 7		// show up to 6 tiles outward from center (13x13 view)
+	view = 6		// show up to 6 tiles outward from center (13x13 view)
 
 
 
@@ -41,3 +41,20 @@ client
 	Southwest()
 		return 0
 
+
+
+proc/blp(var/atom/point_a, var/atom/point_b)
+   	var/list/inline_turfs = get_line(point_a, point_b)
+   	for(var/turf/t in inline_turfs)
+
+        if(t.is_blockade())
+            return 1
+
+turf
+    proc/is_blockade()
+
+        for(var/turf/fglass in src)
+            return 1
+
+area
+	invisibility = 101

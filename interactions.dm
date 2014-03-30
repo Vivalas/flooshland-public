@@ -34,16 +34,19 @@ mob/var/pulling
 mob/var/oloc
 
 mob/Move()
+	if(pull)
+		pull = 0
+		walk(src,null)
 	if(pulling)
-		for(var/mob/M in view(1))
-			if(M.pull == usr)
-				walk_to(M,usr,1)
 		for(var/mob/M in world)
 			if(M.pull == usr)
 				if(get_dist(usr,M) > 1)
 					M.pull = null
 					pulling = 0
 					walk(M,null)
+		for(var/mob/M in view(1))
+			if(M.pull == usr)
+				walk_to(M,usr,1)
 
 
 

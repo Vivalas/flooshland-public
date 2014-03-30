@@ -104,7 +104,7 @@ obj/blood
 		del src
 
 mob/proc/ChkUse()
-	if(dead|!arms)
+	if(dead|!arms|stun)
 		return 0
 	return 1
 
@@ -317,6 +317,11 @@ mob
 					if(!R.ammo)
 						view() << "\red\bold [usr]'s rifle clicks!"
 						return
+					if(blp(src,usr))
+						R.ammo--
+						R.name = "Rifle([R.ammo])"
+						view() << "\red\bold [usr] shoots at [src] with a rifle, but the shot glances off of the glass!"
+						return
 					if(prob(60))
 						R.ammo--
 						src.Dmg(rand(15,30))
@@ -327,4 +332,22 @@ mob
 					view() << "[usr] misses [src] with their rifle!"
 					R.ammo--
 					R.name = "Rifle([R.ammo])"
+					return
 
+			if(istype(usr.equip,/obj/StunRifle))
+				for(var/obj/StunRifle/S in usr)
+					if(S.rel)
+						return
+					if(!S.ammo)
+						view() << "\red\bold [usr]'s stun rifle clicks!"
+						return
+					if(prob(60))
+						S.ammo--
+						spawn src.stun(100)
+						view() << "\red\bold [usr] shoots [src] with their stun rifle!"
+						S.name = "Stun Rifle([S.ammo])"
+						return
+					view() << "[usr] misses [src] with their stun rifle!"
+					S.ammo--
+					S.name = "Stun Rifle([S.ammo])"
+					return

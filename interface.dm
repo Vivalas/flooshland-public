@@ -18,7 +18,7 @@ mob/Stat()
 
 
 	statpanel("Inventory",usr.contents)
-	statpanel("Clothes",usr.torso)
+
 
 
 
@@ -239,9 +239,10 @@ mob/verb/liedown()
 			usr << "You stand up."
 			view() << "[src] stands up!"
 			icon_state = "up"
+			usr.underlays = null
 			for(var/obj/clothes/C in usr.contents)
 				if(C.worn)
-					usr.underlays = null
+
 					C.icon = 'up.dmi'
 					usr.underlays += C
 
@@ -254,9 +255,10 @@ mob/verb/liedown()
 			icon_state = "ground"
 			usr.overlays = null
 			usr.equip = "None"
+			usr.underlays = null
 			for(var/obj/clothes/C in usr.contents)
 				if(C.worn)
-					usr.underlays = null
+
 					C.icon = 'down.dmi'
 					usr.underlays += C
 
@@ -299,9 +301,9 @@ mob/verb/Sleep(n as num)
 		usr.equip = "None"
 		usr.overlays = null
 		client.eye = null
+		usr.underlays = null
 		for(var/obj/clothes/C in usr.contents)
 			if(C.worn)
-				usr.underlays = null
 				C.icon = 'down.dmi'
 				usr.underlays += C
 		var/i
@@ -326,9 +328,10 @@ mob/verb/Sleep(n as num)
 			icon_state = "up"
 			client.eye = usr
 			view() << "\blue [usr] wakes up!"
+			usr.underlays = null
 			for(var/obj/clothes/C in usr.contents)
 				if(C.worn)
-					usr.underlays = null
+
 					C.icon = 'up.dmi'
 					usr.underlays += C
 

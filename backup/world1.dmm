@@ -13,7 +13,7 @@
 "am" = (/turf/f/ffloor,/area)
 "an" = (/turf/f/ffloor,/turf/f/fdoor{name = "Warden's Office"},/area)
 "ao" = (/mob{desc = "His mustache alone is enough to keep prisoners in check."; name = "Isolation Warden"},/turf/f/ffloor,/area)
-"ap" = (/obj/clothes/pjacket,/obj/clothes/phat,/obj/clothes/sglass,/obj/deathsword,/obj/Rifle,/obj/Crate,/obj/clothes/phat,/obj/clothes/pjacket,/obj/clothes/sglass,/obj/deathsword,/obj/Rifle,/obj/StunRifle,/obj/StunRifle,/turf/f/ffloor,/area)
+"ap" = (/obj/clothes/pjacket,/obj/clothes/phat,/obj/clothes/sglass,/obj/deathsword,/obj/Rifle,/obj/Crate,/obj/clothes/phat,/obj/clothes/pjacket,/obj/clothes/sglass,/obj/deathsword,/obj/Rifle,/turf/f/ffloor,/area)
 "aq" = (/turf/f/ffloor,/turf/f/fglass,/area)
 "ar" = (/mob{desc = "This guy's got only three things left in life, a face only his mother can love, and two dads."; name = "Bad Floosh"},/turf/f/ffloor,/area)
 "as" = (/turf/f/ffloor,/turf/f/fdoor{authlist = null; ini = 1; name = "Isolation Room"; secure = 1},/area)
@@ -42,7 +42,7 @@
 "aP" = (/obj/Spawner2,/turf/grass,/area)
 "aQ" = (/obj/Spawner3{name = "Tool Spawner"},/turf/grass,/area)
 "aR" = (/turf/grass,/turf/Tree,/area)
-"aS" = (/obj/StunRifle,/turf/grass,/area)
+"aS" = (/obj/Ramp,/turf/grass,/area)
 "aT" = (/turf/f/ffloor,/turf/f/fdoor{name = "Battle Arena"},/area)
 "aU" = (/obj/Spawner4,/turf/grass,/area)
 "aV" = (/obj/Rifle,/turf/grass,/area)
@@ -75,11 +75,11 @@
 "bw" = (/obj/Lever{ini = 9; name = "Armory"},/turf/f/ffloor,/area)
 "bx" = (/obj/Lever{ini = 10; name = "Control Room Door"},/turf/f/ffloor,/area)
 "by" = (/turf/f/ffloor,/turf/f/fdoor{density = 0; icon_state = "fdooropen"; ini = 10; name = "Bunker Control"; secure = 1},/area)
-"bz" = (/turf/f/ffloor,/turf/f/fdoor/fbdoor{ini = 9; name = "Armory"},/area)
-"bA" = (/turf/f/ffloor,/turf/f/fdoor/fbdoor{ini = 8; name = "Bunker"},/area)
+"bz" = (/turf/fbdoor{ini = 9; name = "Armory"},/turf/f/ffloor,/area)
+"bA" = (/turf/fbdoor{ini = 8; name = "Bunker"},/turf/f/ffloor,/area)
 "bB" = (/obj/blood,/turf/f/ffloor,/area)
 "bC" = (/obj/blood,/mob{dead = 1; desc = "Eww..."; icon = 'corpse.dmi'; icon_state = ""; name = "Unknown Corpse"},/turf/f/ffloor,/area)
-"bD" = (/turf/f/ffloor,/turf/f/fdoor/fbdoor{ini = 7; name = "Detainment Room"},/area)
+"bD" = (/turf/fbdoor{ini = 7; name = "Detainment Room"},/turf/f/ffloor,/area)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab
@@ -175,7 +175,7 @@ aaaaaaaaaxaxaaaaaaaaaaaaaaaaaaaaaaajajaaaaaaaaajajaaaaakamamakamamaqaJamaKaqamam
 axaMaxaxaxaxaxaxaxaxaxaaaaajaaaaaaaaaaaaajaaaaajaaaaaaakakakakamamaqaqaqaNaqamamakakakakaaajaaaaaaaaaaaaaLadagaxagadaLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aOaaaOaaaPaaaPaaaQaaaxaaaaaaaaaaaaaaaaaaajaaayaaaaaaaaaaaaaaakamamamamamamamamamakaaaaaaaaajaaaaaaaaaaaaaLaLagaxagaLaLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaxaaaaaaaaaaaaayaaaaaaaaaaaaaaaaaaaaaaajakamamamamamamamamamakaaaaaaaaaaaaaaaaajaaaaaLadagaxagadaLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaRaaaaaaaSaaaaaaaaaxaaaaaaaaaaaaaaaaaaaaaaaaaaajaaajaaaaaaakaqaqaqakaTakaqaqaqakaaaaaaaaajaaaaaaaaaaaaaLaLagaxagaLaLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaRaaaaaaaaaaaaaaaSaxaaaaaaaaaaaaaaaaaaaaaaaaaaajaaajaaaaaaakaqaqaqakaTakaqaqaqakaaaaaaaaajaaaaaaaaaaaaaLaLagaxagaLaLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaRaaaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaaaaaaaaaLadagaxagadaLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aUaaaaaVaaaWaaaaaaaaaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaaajaaaaaLaLahaxaxahaLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaxaaaaaaaaaaaaaaayaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaLaLaLaXaYaxaXaLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

@@ -91,3 +91,24 @@ mob/proc/Explode()
 		M.equip = "None"
 	for(var/turf/T in view(2))
 		spawn() new/obj/explode (T)
+
+mob/var/stun
+mob/proc/stun(n as num)
+		density = 0
+		move = 0
+		src << "\red\bold You are stunned!"
+		view() << "\red [src] has been stunned!"
+		icon_state = "ground"
+		overlays = null
+		equip = null
+		underlays = null
+		stun = 1
+		for(var/obj/clothes/C in src.contents)
+				C.icon = 'down.dmi'
+				src.underlays += C
+		sleep(n)
+		src << "\green You recover!"
+		stun = 0
+
+mob/admin/verb/stunperson(mob/M)
+	M.stun(10)

@@ -137,7 +137,8 @@ obj/Crate
 				open = 0
 				for(var/obj/O in loc)
 					if(O <> src)
-						O.loc = src
+						if(O.use)
+							O.loc = src
 			else
 				icon_state = "crateo"
 				for(var/obj/O in src.contents)
@@ -164,6 +165,7 @@ obj/Spawner4
 				new/obj/clothes/redt(src.loc)
 
 obj/Ramp
+	name = "Lift"
 	weld = 1
 	desc = "For moving objects up and down!"
 	use = 0
@@ -175,16 +177,59 @@ obj/Ramp
 				continue
 			if(z <> 1)
 				if(locate(/obj/Ramp/) in locate(x,y,z - 1))
-					view() << "\blue [usr] pushes [O] up the ramp!"
+					view() << "\blue [usr] hoists [O] up the lift!"
+					flick("rampup",src)
+					flick("rampup",/obj/Ramp)
 					O.loc = locate(x,y,z - 1)
 					return
 			if(z <> 6)
 				if(locate(/obj/Ramp/) in locate(x,y,z + 1))
-					view() << "\blue [usr] pushs [O] down the ramp!"
+					view() << "\blue [usr] lowers [O] down the lift!"
+					flick("rampdown",/obj/Ramp)
 					O.loc = locate(x,y,z + 1)
 					return
 
 
+
+obj/StunRifle
+	use = 1
+	name = "Stun Rifle(4)"
+	desc = "Pssh, what cop uses a taser these days!"
+	icon = 'objects.dmi'
+	icon_state = "stunrifle"
+
+
+	verb/Equip()
+		set name = "Equip/Unequip"
+		if(src == usr.equip)
+			usr.equip = "None"
+			view() << "\red [usr] slings their stun rifle over their shoulder!"
+			usr.overlays -= 'stuno.dmi'
+			return
+		else
+			if(usr.equip == "None")
+				usr.equip = src
+				view() << "\red [usr] draws their stun rifle!"
+				usr.overlays += 'stuno.dmi'
+	var/ammo = 4
+	var/tmp/rel = 0
+
+	verb/Reload()
+		if(usr.ChkUse())
+			var/start = usr.loc
+			usr << "\red You are reloading your stun rifle, don't move!"
+			view() << "\blue [usr] is trying to reload their stun rifle!"
+			rel = 1
+			sleep(55)
+			if(start <> usr.loc)
+				usr << "\red You moved when trying to reload your stun rifle!"
+				view() << "\red\bold [usr] failed to reload their stun rifle because they moved!"
+				rel = 0
+				return
+			view() << "\red\bold [usr] reloads their stun rifle!"
+			rel = 0
+			ammo = 4
+			src.name = "Stun Rifle([ammo])"
 
 
 
