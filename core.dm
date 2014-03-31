@@ -19,14 +19,6 @@ mob
         tmp
             move_time = 0
 
-    Move()
-        if(world.time < move_time)
-            return
-
-        // set the move_time for move_delay ticks from now
-        move_time = world.time + move_delay
-        return ..() // do the default Move() proc and return what it ret
-
 
 
 

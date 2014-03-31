@@ -177,33 +177,76 @@ obj/clothes/phat
 			if(!usr.move)
 				usr << "\red You cannot change whilst lying down!"
 			name = oname
+mob/var/restrained = 0
 
-obj/clothes/Handcuffs
+
+obj/clothes/handcuffs
 	desc = "Badboys badboys, watcha gonna do?"
 	icon = 'up.dmi'
 	icon_state = "hcuffs"
 	slot = "restraints"
-
+	verb/use(mob/M in view(1))
+		if(!usr.ChkUse())
+			return
+		if(M.restrained)
+			usr << "\blue [M] is already handcuffed!"
+			return
+		if(worn)
+			return
+		view() << "\red\bold [usr] is trying to handcuff [M]!"
+		var/start = usr.loc
+		var/start2 = M.loc
+		sleep(50)
+		if(start == usr.loc && start2 == M.loc && !worn && usr.ChkUse() && usr.move)
+			view() << "\red\bold [M] has been handcuffed by [usr]!"
+			name = "[name] ([slot])"
+			M.restrained = 1
+			M.overlays = null
+			M.equip = null
+			loc = M
 	verb/Wear()
+		if(usr.restrained)
+			goto rem
+		if(!usr.ChkUse())
+			return
+		if(!usr.move)
+			usr << "\red You cannot change whilst lying down!"
 		if(!worn)
 			for(var/obj/clothes/C in usr)
 				if(C.worn)
 					if(C.slot == src.slot)
 						usr << "\red You already have clothes in that slot!"
 						return
-			src.underlays += src
+
 			worn = 1
 			oname = name
 			name = "[name] ([slot])"
-			src.restraint = 1
+			usr.restrained = 1
+			usr.overlays = null
+			usr.equip = "None"
+			return
 
 
-		else
-			usr.underlays -= /obj/clothes/hcuffs
-			worn = 0
+
+
+
+		:rem
+			if(usr.dead)
+				return
+			var/start = usr.loc
 			if(!usr.move)
 				usr << "\red You cannot change whilst lying down!"
+			usr << "\red You are removing your handcuffs, don't move!"
+			view() << "\blue [usr] is trying to remove their handcuffs!"
+			sleep(300)
+			if(start <> usr.loc)
+				return
+			view() << "\red\bold [usr] removes their handcuffs!"
+
+			worn = 0
+			usr.restrained = 0
 			name = oname
+
 
 
 /* Acceptable slots are: hat, eyes, overwear, torso, shoes

@@ -5,10 +5,9 @@ turf/Dirt
 	verb/Eat()
 		set src in view(0)
 		if(usr.ChkUse())
-			for(var/turf/T in locate(src.x,src.y,src.z + 1))
-				if(ispath(T,/turf/f))
-					usr << "\blue You try to dig out the dirt but there is something hard underneathe!"
-					return
+			if(istype(get_step(src, UP), /turf/f))
+				usr << "\blue You try to dig out the dirt but there is something hard underneath!"
+				return
 			usr << "\blue You scoop handfuls of dirt from the ground and shove them in your mouth!"
 			view() << "\blue [usr] is scooping [src] from the ground and eating it!"
 			if(usr.z <> 6)
@@ -51,6 +50,7 @@ turf/f/fdoor
 	desc = "A sleek door that has to be opened using a lever."
 	density = 1
 	layer = MOB_LAYER + 1
+	var/inop = 0
 	var/in1
 	var/in2
 	var/secure
@@ -69,6 +69,8 @@ turf/f/fdoor
 			return
 
 	Click()
+		if(inop)
+			return
 		if(secure)
 			if(usr.ckey in authlist)
 				change()
@@ -88,9 +90,12 @@ turf/f/fdoor
 		desc = "A strong impenetrable door."
 		density = 1
 		opacity = 1
+		inop = 1
 		layer = MOB_LAYER + 1
+
 		change()
 			if(!density)
+				opacity = 1
 				density = 1
 				icon_state = "fbdoor"
 				view() << "\blue [name] clamps shut with a hiss!"
@@ -102,8 +107,8 @@ turf/f/fdoor
 				view() << "\blue [name] hisses open!"
 				return
 
-	Click()
-		return
+
+
 
 
 

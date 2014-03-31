@@ -21,36 +21,46 @@ mob/verb/pull(mob/M in view(1))
 			return
 		if(!pulling)
 			M.pull = usr
+			pullmob = M
 			pulling = 1
 		else
+			pullmob = null
 			M.pull = null
 			pulling = 0
-			walk(M,null)
+
 
 
 mob/var/pull
 obj/var/pull
 mob/var/pulling
+mob/var/pullmob
 mob/var/oloc
 
 mob/Move()
+	if(world.time < move_time)
+		return
+	move_time = world.time + move_delay
+		 // do the default Move() proc and return what it ret
+	oloc = loc
+
 	if(pull)
-		pull = 0
-		walk(src,null)
+		if(restrained)
+			return
+		pull = null
 	if(pulling)
-		for(var/mob/M in world)
-			if(M.pull == usr)
-				if(get_dist(usr,M) > 1)
-					M.pull = null
-					pulling = 0
-					walk(M,null)
-		for(var/mob/M in view(1))
-			if(M.pull == usr)
-				walk_to(M,usr,1)
+		var/mob/M = pullmob
+		if(get_dist(M,usr) > 1)
+
+			M.pull = null
+			pulling = 0
+			pullmob = null
+		for(var/mob/N in view(1))
+			if(N.pull == usr)
+				N.loc = oloc
+	.=..()
 
 
 
-	..()
 
 
 

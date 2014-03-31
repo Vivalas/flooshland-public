@@ -81,9 +81,37 @@ mob/proc/Explode()
 		M << "\red\bold You are enveloped in a powerful explosion!"
 		M.Dmg(rand(25,50))
 		if(prob(50))
-			M.legs = 0
+			if(M.legs)
+				M.legs = 0
 		if(prob(50))
-			M.arms = 0
+			if(M.arms)
+				M.arms = 0
+		M.ChkLimbs()
+		if(prob(95))
+			spawn() M.Bleed(rand(1,5),15)
+		M.overlays = null
+		M.equip = "None"
+	for(var/mob/M in view(1))
+		M.Dmg(rand(25,50))
+		if(prob(50))
+			if(M.legs)
+				M.legs = 0
+		if(prob(50))
+			if(M.arms)
+				M.arms = 0
+		M.ChkLimbs()
+		if(prob(95))
+			spawn() M.Bleed(rand(1,5),15)
+		M.overlays = null
+		M.equip = "None"
+	for(var/mob/M in view(0))
+		M.Dmg(rand(25,50))
+		if(prob(50))
+			if(M.legs)
+				M.legs = 0
+		if(prob(50))
+			if(M.arms)
+				M.arms = 0
 		M.ChkLimbs()
 		if(prob(95))
 			spawn() M.Bleed(rand(1,5),15)
@@ -100,15 +128,19 @@ mob/proc/stun(n as num)
 		view() << "\red [src] has been stunned!"
 		icon_state = "ground"
 		overlays = null
-		equip = null
+		equip = "None"
 		underlays = null
 		stun = 1
 		for(var/obj/clothes/C in src.contents)
 				C.icon = 'down.dmi'
 				src.underlays += C
-		sleep(n)
+		var/i
+		for(i=0,i<n,i++)
+				stun = 1
+				sleep(10)
 		src << "\green You recover!"
 		stun = 0
 
 mob/admin/verb/stunperson(mob/M)
+	set category = "Admin"
 	M.stun(10)

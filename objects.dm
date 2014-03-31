@@ -104,7 +104,7 @@ obj/blood
 		del src
 
 mob/proc/ChkUse()
-	if(dead|!arms|stun)
+	if(dead|!arms|stun|restrained)
 		return 0
 	return 1
 

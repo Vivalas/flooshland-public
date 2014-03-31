@@ -293,7 +293,7 @@ mob
 
 mob/verb/Sleep(n as num)
 	set desc = "Enter how long you want to sleep, in seconds. Sleeping regenerates health and limbs. (Not reversable!)"
-	if(!dead)
+	if(!dead && !stun)
 		view() << "\blue [usr] goes to sleep!"
 		density = 0
 		move = 0
