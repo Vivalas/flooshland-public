@@ -419,3 +419,6 @@ obj/var/weld = 0
 
 mob/verb/Help()
 	usr << browse('help.htm',"window=Help")
+
+mob/verb/Changelog()
+	usr << browse('change.htm',"window=Change Log")
