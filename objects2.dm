@@ -6,6 +6,10 @@ obj/Axe
 
 	verb/Equip()
 		set name = "Equip/Unequip"
+		if(!usr.ChkUse())
+			return
+		if(!usr.move)
+			return
 		if(src == usr.equip)
 			usr.equip = "None"
 			view() << "\red [usr] sheathes their axe!"
@@ -24,6 +28,10 @@ obj/Wood
 	icon_state = "wood"
 
 	verb/Craft()
+		if(!usr.ChkUse())
+			return
+		if(!usr.move)
+			return
 		var/choice = input("Choose what to craft.","Crafting") in list("Wall","Door","Window","Floor","Ramp")
 		if(choice == "Wall")
 			view() << "\blue [usr] builds a wall!"
@@ -78,6 +86,9 @@ obj/Spawner3
 		set src in view(1)
 		if(usr.ChkUse())
 			if(!(locate(/obj/Axe) in src.loc))
+				if(prob(50))
+					new/obj/PickA(src.loc)
+					return
 				new/obj/Axe(src.loc)
 
 turf/Hole
@@ -85,7 +96,7 @@ turf/Hole
 	icon_state = "hole"
 	desc = "A dark hole that leads to the depths below."
 	Entered()
-		if(src.z == 6)
+		if(src.z == 11)
 			return
 		usr.loc = locate(src.x,src.y,src.z + 1)
 
@@ -182,7 +193,7 @@ obj/Ramp
 					flick("rampup",/obj/Ramp)
 					O.loc = locate(x,y,z - 1)
 					return
-			if(z <> 6)
+			if(z <> 11)
 				if(locate(/obj/Ramp/) in locate(x,y,z + 1))
 					view() << "\blue [usr] lowers [O] down the lift!"
 					flick("rampdown",/obj/Ramp)
@@ -201,6 +212,10 @@ obj/StunRifle
 
 	verb/Equip()
 		set name = "Equip/Unequip"
+		if(!usr.ChkUse())
+			return
+		if(!usr.move)
+			return
 		if(src == usr.equip)
 			usr.equip = "None"
 			view() << "\red [usr] slings their stun rifle over their shoulder!"
@@ -232,5 +247,27 @@ obj/StunRifle
 			src.name = "Stun Rifle([ammo])"
 
 
+obj/PickA
+	desc = "A tool for cutting into rock, the 'ol fashioned way."
+	use = 1
+	icon = 'sword.dmi'
+	icon_state = "picka"
+
+	verb/Equip()
+		set name = "Equip/Unequip"
+		if(!usr.ChkUse())
+			return
+		if(!usr.move)
+			return
+		if(src == usr.equip)
+			usr.equip = "None"
+			view() << "\red [usr] sheathes their pick!"
+			usr.overlays -= 'picko.dmi'
+			return
+		else
+			if(usr.equip == "None")
+				usr.equip = src
+				view() << "\red [usr] draws their pick!"
+				usr.overlays += 'picko.dmi'
 
 

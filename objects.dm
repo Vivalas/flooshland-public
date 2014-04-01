@@ -143,6 +143,10 @@ obj/Sword
 
 	verb/Equip()
 		set name = "Equip/Unequip"
+		if(!usr.ChkUse())
+			return
+		if(!usr.move)
+			return
 		if(src == usr.equip)
 			usr.equip = "None"
 			view() << "\red [usr] sheathes their sword!"
@@ -197,6 +201,10 @@ obj/deathsword
 
 	verb/Equip()
 		set name = "Equip/Unequip"
+		if(!usr.ChkUse())
+			return
+		if(!usr.move)
+			return
 		if(src == usr.equip)
 			usr.equip = "None"
 			view() << "\red [usr] sheathes their Garnellian Death Sword"
@@ -274,6 +282,10 @@ obj/Rifle
 
 	verb/Equip()
 		set name = "Equip/Unequip"
+		if(!usr.ChkUse())
+			return
+		if(!usr.move)
+			return
 		if(src == usr.equip)
 			usr.equip = "None"
 			view() << "\red [usr] slings their rifle over their shoulder!"

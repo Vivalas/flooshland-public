@@ -5,12 +5,14 @@ turf/Dirt
 	verb/Eat()
 		set src in view(0)
 		if(usr.ChkUse())
+			if(usr.z == 11)
+				return
 			if(istype(get_step(src, UP), /turf/f))
 				usr << "\blue You try to dig out the dirt but there is something hard underneath!"
 				return
 			usr << "\blue You scoop handfuls of dirt from the ground and shove them in your mouth!"
 			view() << "\blue [usr] is scooping [src] from the ground and eating it!"
-			if(usr.z <> 6)
+			if(usr.z <> 11)
 				new /turf/Dexit (locate(src.x,src.y,src.z + 1))
 			new /turf/Hole (src)
 	verb/Lick()
@@ -240,3 +242,30 @@ turf/wglass
 	desc = "A sturdy wooden opening."
 	density = 1
 
+turf/s/swall
+	name = "Stone Wall"
+	icon = 'grass.dmi'
+	icon_state = "swall"
+	desc = "A wall of solid stone, don't expect to be able to eat through this!"
+	density = 1
+	opacity = 1
+	DblClick()
+		if(usr.ChkUse() && istype(usr.equip,/obj/PickA) && src in view(1))
+			view() << "\blue [usr] is picking away at the wall!"
+			var/start = usr.loc
+			sleep(25)
+			if(usr.ChkUse() && usr.move && usr.loc == start && istype(usr.equip,/obj/PickA))
+				new /turf/s/sfloor (src)
+
+turf/s/sfloor
+	name = "Stone Floor"
+	icon = 'grass.dmi'
+	icon_state = "sfloor"
+	desc = "A smooth sleek floor made out of rock."
+	DblClick()
+		if(usr.ChkUse() && istype(usr.equip,/obj/PickA) && src in view(1))
+			view() << "\blue [usr] is picking away at the floor!"
+			var/start = usr.loc
+			sleep(25)
+			if(usr.ChkUse() && usr.move && usr.loc == start && istype(usr.equip,/obj/PickA))
+				new /turf/Dirt (src)

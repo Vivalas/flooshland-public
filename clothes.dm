@@ -21,6 +21,10 @@ obj/clothes/greent
 
 
 	verb/Wear()
+		if(!usr.ChkUse())
+			return
+		if(!usr.move)
+			return
 		if(!worn)
 			for(var/obj/clothes/C in usr)
 				if(C.worn)
@@ -50,6 +54,10 @@ obj/clothes/redt
 	slot = "torso"
 
 	verb/Wear()
+		if(!usr.ChkUse())
+			return
+		if(!usr.move)
+			return
 		if(!worn)
 			for(var/obj/clothes/C in usr)
 				if(C.worn)
@@ -78,6 +86,10 @@ obj/clothes/that
 	slot = "hat"
 
 	verb/Wear()
+		if(!usr.ChkUse())
+			return
+		if(!usr.move)
+			return
 		if(!worn)
 			for(var/obj/clothes/C in usr)
 				if(C.worn)
@@ -105,6 +117,10 @@ obj/clothes/sglass
 	slot = "eyes"
 
 	verb/Wear()
+		if(!usr.ChkUse())
+			return
+		if(!usr.move)
+			return
 		if(!worn)
 			for(var/obj/clothes/C in usr)
 				if(C.worn)
@@ -132,6 +148,10 @@ obj/clothes/pjacket
 	slot = "torso"
 
 	verb/Wear()
+		if(!usr.ChkUse())
+			return
+		if(!usr.move)
+			return
 		if(!worn)
 			for(var/obj/clothes/C in usr)
 				if(C.worn)
@@ -159,6 +179,10 @@ obj/clothes/phat
 	slot = "hat"
 
 	verb/Wear()
+		if(!usr.ChkUse())
+			return
+		if(!usr.move)
+			return
 		if(!worn)
 			for(var/obj/clothes/C in usr)
 				if(C.worn)

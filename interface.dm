@@ -364,7 +364,7 @@ obj
 
 
 obj/clothes
-	DblClick()
+	Click()
 		if(usr.ChkUse())
 			if(use)
 				if(src in view(1))
@@ -416,3 +416,6 @@ mob/admin/verb/sethealth(mob/M in world,n as num)
 	M.Dmg(0)
 
 obj/var/weld = 0
+
+mob/verb/Help()
+	usr << browse('help.htm',"window=Help")
