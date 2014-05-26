@@ -226,6 +226,8 @@ mob/verb/SetName(T as text)
 	if(src.nt == 1)
 		src << "\red You can only set your name once!"
 		return
+	if(src.dead)
+		return
 	src.name = "[T] ([src.key])"
 	src.nt++
 
@@ -284,6 +286,7 @@ mob/verb/Respawn()
 		res = 1
 		M.name = usr.key
 		client.mob = M
+		client.eye = M
 	if(!dead)
 		usr << "You are not currently dead!"
 
@@ -405,7 +408,9 @@ mob/admin/verb/jail(mob/M in world)
 	M.loc = locate(5,24,1)
 	M << "\red\bold <U><BIG> You have been jailed! All your items have been taken!"
 	M << "\red\n You will be held here until the admins are done with you!"
-
+	M.underlays = null
+	M.equip = null
+	M.overlays = null
 mob/admin/verb/delete(atom/a in view())
 	set category = "Admin"
 	del a
@@ -422,3 +427,6 @@ mob/verb/Help()
 
 mob/verb/Changelog()
 	usr << browse('change.htm',"window=Change Log")
+
+
+

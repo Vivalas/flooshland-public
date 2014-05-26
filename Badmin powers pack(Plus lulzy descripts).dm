@@ -34,20 +34,20 @@ mob/badmin/verb/omnipotence(mob/M in world)
 	set category = "Badmin"
 	src.client.eye = M
 
-mob/badmin/verb/doom(mob/m in world)
+mob/badmin/verb/doom(mob/M in world)
 	set category = "Badmin"
-	if(m.stuck)
-		m << "\green The Devil has spared you!"
-		view() << "The Devil has spared [m]."
-		m.stuck = 0
+	if(M.stuck)
+		M << "\green The Devil has spared you!"
+		view() << "The Devil has spared [M]."
+		M.stuck = 0
 		return
-	m.Explode()
-	m.Dmg(99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999)
-	m << "\bold\red You are blinded by an explosion of flesh!"
-	m << "\red You're DOOOOOMED!!!!"
-	m << "\red\bold You scream in agony as your blood boils!"
-	view() << "\red\bold A fountain of blood erupts from [m]!"
-	m.stuck = 1
+	M.Explode()
+	M.Dmg(99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999)
+	M << "\bold\red You are blinded by an explosion of flesh!"
+	M << "\red You're DOOOOOMED!!!!"
+	M << "\red\bold You scream in agony as your blood boils!"
+	view() << "\red\bold A fountain of blood erupts from [M]!"
+	M.stuck = 1
 
 mob/verb/BadminGrief(t as text)
 	for(var/mob/badmin/M in world)

@@ -1,5 +1,6 @@
 world/New()
 	spawn(10) DayNight()
+	spawn() Poll()
 	for(var/mob/M in world)
 		for(var/obj/O in M.loc)
 			if(O.use)
@@ -95,3 +96,12 @@ proc/get_line(atom/A, atom/B)
 			error -= 1
 
 	return line
+
+
+
+proc/Poll()
+	set background = 1
+	sleep(3000)
+	world.game_state = 1
+	sleep(1)
+	world.game_state = 0

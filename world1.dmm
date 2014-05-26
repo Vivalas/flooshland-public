@@ -29,7 +29,7 @@
 "aC" = (/turf/f/ffloor,/turf/f/fdoor{density = 0; icon_state = "fdooropen"; ini = 18; name = "Waiting Room"; secure = 1},/area)
 "aD" = (/obj/Lever{ini = 1},/turf/f/ffloor,/area)
 "aE" = (/turf/f/ffloor,/turf/f/fdoor{name = "Warden's Office"},/area)
-"aF" = (/mob{desc = "His mustache alone is enough to keep prisoners in check."; name = "Isolation Warden"},/turf/f/ffloor,/area)
+"aF" = (/obj/clothes/phat,/mob{desc = "His mustache alone is enough to keep prisoners in check."; name = "Isolation Warden"},/turf/f/ffloor,/area)
 "aG" = (/obj/clothes/pjacket,/obj/clothes/phat,/obj/clothes/sglass,/obj/deathsword,/obj/Rifle,/obj/Crate,/obj/clothes/phat,/obj/clothes/pjacket,/obj/clothes/sglass,/obj/deathsword,/obj/Rifle,/obj/StunRifle,/obj/StunRifle,/obj/clothes/handcuffs,/obj/clothes/handcuffs,/turf/f/ffloor,/area)
 "aH" = (/turf/dwall,/area)
 "aI" = (/mob{desc = "This guy's got only three things left in life, a face only his mother can love, and two dads."; name = "Bad Floosh"},/turf/f/ffloor,/area)

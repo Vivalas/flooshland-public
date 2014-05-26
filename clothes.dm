@@ -13,6 +13,7 @@ obj/clothes
 
 obj/clothes/greent
 	name = "Green Tunic"
+	oname = "Green Tunic"
 	desc = "A stylin' green tunic!"
 	icon = 'up.dmi'
 	icon_state = "greent"
@@ -48,6 +49,7 @@ obj/clothes/greent
 
 obj/clothes/redt
 	name = "Red Tunic"
+	oname = "Red Tunic"
 	desc = "A stylin' red tunic!"
 	icon = 'up.dmi'
 	icon_state = "redt"
@@ -80,6 +82,7 @@ obj/clothes/redt
 
 obj/clothes/that
 	name = "Top Hat"
+	oname = "Top Hat"
 	desc = "Only a real gentlemen has one of these!"
 	icon = 'up.dmi'
 	icon_state = "that"
@@ -111,6 +114,7 @@ obj/clothes/that
 
 obj/clothes/sglass
 	name = "Sunglasses"
+	oname = "Sunglasses"
 	desc = "Rightfully deems the wearer to be badass."
 	icon = 'up.dmi'
 	icon_state = "sglass"
@@ -142,6 +146,7 @@ obj/clothes/sglass
 
 obj/clothes/pjacket
 	name = "Police Uniform"
+	oname = "Police Uniform"
 	desc = "The only way to shout one-liners."
 	icon = 'up.dmi'
 	icon_state = "pjacket"
@@ -173,6 +178,7 @@ obj/clothes/pjacket
 
 obj/clothes/phat
 	name = "Police Hat"
+	oname = "Police Hat"
 	desc = "Completes the looks."
 	icon = 'up.dmi'
 	icon_state = "phat"
@@ -205,6 +211,7 @@ mob/var/restrained = 0
 
 
 obj/clothes/handcuffs
+	oname = "handcuffs"
 	desc = "Badboys badboys, watcha gonna do?"
 	icon = 'up.dmi'
 	icon_state = "hcuffs"

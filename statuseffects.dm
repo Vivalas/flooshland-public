@@ -21,7 +21,9 @@ mob/proc/ChkHlth()
 		density = 0
 		for(var/obj/clothes/C in src)
 			C.icon = 'up.dmi'
-			C.layer = OBJ_LAYER
+			C.worn = 0
+			C.name = C.oname
+
 		for(var/obj/O in src)
 			O.loc = src.loc
 		src.equip = "None"
@@ -121,7 +123,9 @@ mob/proc/Explode()
 		spawn() new/obj/explode (T)
 
 mob/var/stun
+
 mob/proc/stun(n as num)
+
 		density = 0
 		move = 0
 		src << "\red\bold You are stunned!"
@@ -131,9 +135,12 @@ mob/proc/stun(n as num)
 		equip = "None"
 		underlays = null
 		stun = 1
-		for(var/obj/clothes/C in src.contents)
+		for(var/obj/clothes/C in usr.contents)
+				if(!C.worn) continue
+
 				C.icon = 'down.dmi'
-				src.underlays += C
+				usr.underlays += C
+
 		var/i
 		for(i=0,i<n,i++)
 				stun = 1

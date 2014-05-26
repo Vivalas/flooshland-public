@@ -39,6 +39,14 @@ macro "macro"
 		name = "D"
 		command = "Eat"
 		is-disabled = false
+	elem 
+		name = "O"
+		command = "OOC"
+		is-disabled = false
+	elem 
+		name = "S"
+		command = "Say"
+		is-disabled = false
 
 
 menu "menu"
@@ -102,12 +110,12 @@ window "default"
 		macro = "macro"
 		menu = "menu"
 		on-close = ""
-	elem "tab1"
-		type = TAB
-		pos = 440,8
-		size = 192x136
-		anchor1 = none
-		anchor2 = none
+	elem "button2"
+		type = BUTTON
+		pos = 344,88
+		size = 56x40
+		anchor1 = 54,18
+		anchor2 = 63,27
 		font-family = ""
 		font-size = 0
 		font-style = ""
@@ -116,16 +124,81 @@ window "default"
 		is-visible = true
 		is-disabled = false
 		is-transparent = false
-		is-default = true
+		is-default = false
 		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Help"
+		image = ""
+		command = "Help"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
+	elem "button1"
+		type = BUTTON
+		pos = 344,8
+		size = 56x40
+		anchor1 = 54,2
+		anchor2 = 63,10
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Changelog"
+		image = ""
+		command = "Changelog"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
+	elem "info1"
+		type = INFO
+		pos = 408,8
+		size = 224x160
+		anchor1 = 64,2
+		anchor2 = 99,35
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #ffffff
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = true
+		border = sunken
 		drop-zone = false
 		right-click = false
 		saved-params = ""
 		on-size = ""
-		tabs = ""
-		current-tab = ""
+		highlight-color = #00ff00
+		tab-text-color = #000000
+		tab-background-color = none
+		tab-font-family = ""
+		tab-font-size = 0
+		tab-font-style = ""
+		allow-html = true
 		multi-line = true
+		on-show = ""
+		on-hide = ""
 		on-tab = ""
+		prefix-color = none
+		suffix-color = none
 	elem "input1"
 		type = INPUT
 		pos = 8,416
@@ -152,10 +225,10 @@ window "default"
 		no-command = false
 	elem "output1"
 		type = OUTPUT
-		pos = 440,160
-		size = 192x248
-		anchor1 = 100,0
-		anchor2 = 100,100
+		pos = 344,176
+		size = 288x232
+		anchor1 = 54,37
+		anchor2 = 99,85
 		font-family = ""
 		font-size = 0
 		font-style = ""
@@ -179,9 +252,9 @@ window "default"
 	elem "map1"
 		type = MAP
 		pos = -24,-8
-		size = 456x416
+		size = 360x416
 		anchor1 = 0,0
-		anchor2 = 100,100
+		anchor2 = 53,85
 		font-family = ""
 		font-size = 0
 		font-style = ""

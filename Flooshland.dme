@@ -24,6 +24,7 @@
 #include "statuseffects.dm"
 #include "terrain.dm"
 #include "world.dm"
+#include "skin.dmf"
 #include "world1.dmm"
 // END_INCLUDE
 

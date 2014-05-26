@@ -11,7 +11,8 @@ world
 
 
 // Make objects move 8 pixels per tick when walking
-
+world
+	status = "\[MAIN SERVER] Hosted by Vivalas (BYOND SHELL SERVER)"
 
 mob
     var
