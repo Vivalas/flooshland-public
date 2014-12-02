@@ -16,6 +16,14 @@ mob/Stat()
 		stat("Legs?",legsme)
 		stat("Bleeding Rate:",bleed)
 
+		if(atonement)
+			stat("MAGIC________________")
+			stat("Atonement:",atonement)
+			stat("Magic Level:",level)
+			stat("EXP:","[magic_xp]/[level_threshold]")
+			stat("EXP to next level:",level_threshold-magic_xp)
+			stat("Mana:","[mana]/[max_mana]")
+
 
 	statpanel("Inventory",usr.contents)
 
@@ -103,7 +111,7 @@ mob
 
 
 mob/admin
-	key = "vivalas"
+	key = "Vivalas"
 
 
 mob/admin/verb/mute(mob/M in world)
@@ -427,6 +435,24 @@ mob/verb/Help()
 
 mob/verb/Changelog()
 	usr << browse('change.htm',"window=Change Log")
+mob/admin/verb/Spawn_Item()
+	set category = "Admin"
+	var/list/create = list()
+	create += typesof(/mob)
+	create += typesof(/obj)
+	create += typesof(/turf)
+
+	var/input = input("Choose an entity to spawn.") in create
+	if(!input)
+		return
+	var/atom/A = new input(src.loc)
 
 
+mob/admin/verb/Set_Controller(var/mob/A in world, var/mob/B in world)
+	set category = "Admin"
+	B.key = A.key
+
+mob/admin/verb/Admin_Set_Name(m as text)
+	set category = "Admin"
+	name = text
 

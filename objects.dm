@@ -269,6 +269,13 @@ obj/Spawner2
 				if(prob(1))
 					new/obj/swagpotion
 					return
+
+				if(prob(5))
+					new/obj/magicPotion
+					return
+				if(prob(1))
+					new/obj/magicPotiondeath
+					return
 				new/obj/bombpotion(src.loc)
 
 
@@ -340,8 +347,22 @@ mob
 						view() << "\red\bold [usr] shoots [src] with their rifle!"
 						if(!(locate(/obj/blood/) in src.loc)) new/obj/blood(src.loc)
 						R.name = "Rifle([R.ammo])"
+						for(var/mob/M in world)
+							if(M.z == usr.z)
+								if(M in viewers(usr))
+									continue
+								if(M == usr)
+									continue
+								M << "\red\bold You hear the sharp crack of a rifle!"
 						return
 					view() << "[usr] misses [src] with their rifle!"
+					for(var/mob/M in world)
+						if(M.z == usr.z)
+							if(M in viewers(usr))
+								continue
+							if(M == usr)
+								continue
+							M << "\red\bold You hear the sharp crack of a rifle!"
 					R.ammo--
 					R.name = "Rifle([R.ammo])"
 					return

@@ -1,10 +1,10 @@
 // BEGIN_INTERNALS
 /*
 MAP_ICON_TYPE: 0
-WINDOW: statuseffects.dm;world.dm;interface.dm;world1.dmm;skin.dmf
-LAST_COMPILE_VERSION: 504.1234
-FILE: skin.dmf
-LAST_COMPILE_TIME: 1397709841
+WINDOW: interface.dm;magicks.dm
+LAST_COMPILE_VERSION: 506.1247
+FILE: magicks.dm
+LAST_COMPILE_TIME: 1415414065
 AUTO_FILE_DIR: ON
 */
 // END_INTERNALS

@@ -135,11 +135,10 @@ mob/proc/stun(n as num)
 		equip = "None"
 		underlays = null
 		stun = 1
-		for(var/obj/clothes/C in usr.contents)
+		for(var/obj/clothes/C in src.contents)
 				if(!C.worn) continue
-
 				C.icon = 'down.dmi'
-				usr.underlays += C
+				src.underlays += C
 
 		var/i
 		for(i=0,i<n,i++)

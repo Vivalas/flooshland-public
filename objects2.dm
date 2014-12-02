@@ -248,6 +248,7 @@ obj/StunRifle
 
 
 obj/PickA
+	name = "Pickaxe"
 	desc = "A tool for cutting into rock, the 'ol fashioned way."
 	use = 1
 	icon = 'sword.dmi'

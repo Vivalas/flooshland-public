@@ -1,6 +1,8 @@
 world/New()
 	spawn(10) DayNight()
 	spawn() Poll()
+
+	spawn() Ticker()
 	for(var/mob/M in world)
 		for(var/obj/O in M.loc)
 			if(O.use)
@@ -8,6 +10,7 @@ world/New()
 	for(var/mob/M in world)
 		for(var/obj/clothes/C in M.contents)
 			M.underlays = M
+			C.worn = 1
 
 
 	for(var/obj/Crate/C in world)

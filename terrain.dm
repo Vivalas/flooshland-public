@@ -263,9 +263,20 @@ turf/s/sfloor
 	icon_state = "sfloor"
 	desc = "A smooth sleek floor made out of rock."
 	DblClick()
+
 		if(usr.ChkUse() && istype(usr.equip,/obj/PickA) && src in view(1))
 			view() << "\blue [usr] is picking away at the floor!"
 			var/start = usr.loc
-			sleep(25)
-			if(usr.ChkUse() && usr.move && usr.loc == start && istype(usr.equip,/obj/PickA))
-				new /turf/Dirt (src)
+			sleep(50)
+			if(usr.ChkUse() && istype(usr.equip,/obj/PickA) && usr.loc == start)
+				if(usr.z == 11)
+					return
+				if(istype(get_step(src, UP), /turf/f))
+					usr << "\blue You try to pick out the stone but there is something hard underneath!"
+					return
+
+				if(usr.z <> 11)
+					var/turf/Dexit/D = new(locate(src.x,src.y,src.z + 1))
+					var/turf/Hole/H = new(src)
+					D.icon_state = "s_holeexit"
+					H.icon_state = "s_hole"
